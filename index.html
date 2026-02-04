@@ -1,0 +1,226 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Influence of IQ on Auditory Cortex Activation in Schizophrenia</title>
+<meta name="description" content="Capstone project website" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <div class="split">
+
+    <!-- LEFT: frozen while scrolling -->
+    <aside class="left" aria-label="Project overview">
+      <div class="left-inner">
+        <header class="left-header">
+          <p class="kicker">Capstone • fMRI</p>
+          <h1 class="left-title">The Influence of IQ on the Brain’s Auditory Cortex Activation in Schizophrenia</h1>
+          <p class="left-subtitle">Created by: Paige Pagaduan, Katrina Suherman, Rheka Narwastu</p>
+          <p class="left-subtitle">Mentor: Armin Schwartzman, Gabriel Riegner </p>
+
+
+          <div class="left-actions">
+            <a class="btn btn-primary" href="#introduction">Start reading</a>
+            <a class="btn" href="https://github.com/rhekacitra/IQ-Influence-on-Brain-Auditory-Cortex-in-Schizophrenia.git" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a class="btn btn-ghost" href="https://openneuro.org/datasets/ds004302/versions/1.0.0" target="_blank" rel="noopener noreferrer">Dataset</a>
+            <a class="btn btn-ghost" href="#">Poster</a>
+          </div>
+        </header>
+
+        <nav class="left-nav" aria-label="Sections">
+          <p class="left-nav-title">Sections</p>
+          <a href="#hero">Preview</a>
+          <a href="#welcome">Welcome</a>
+          <a href="#introduction">Introduction</a>
+          <a href="#objectives">Data</a>
+          <a href="#methods">Methods</a>
+          <a href="#results">Results</a>
+          <a href="#conclusion">Conclusion</a>
+          <a href="#get-in-touch">Get in touch</a>
+        </nav>
+
+
+      </div>
+    </aside>
+
+    <!-- RIGHT: scrollable content -->
+    <main class="right" aria-label="Main content">
+
+      <section class="section hero" id="hero">
+        <h2>Project Preview</h2>
+          <div class="iframe-wrapper">
+            <iframe
+              src="assets/stg_mask.html"
+              title="Interactive Background Viewer"
+              loading="lazy"
+              frameborder="0"
+            ></iframe>
+          </div>
+      </section>
+
+      <section class="section" id="welcome">
+        <h2>Welcome!</h2>
+        <p>
+          This project explores how the brain processes speech in individuals with schizophrenia, with a focus on the role of cognitive ability.
+          Using functional MRI data, we examine whether differences in intelligence help explain variability in auditory cortex responses during speech perception.
+        </p>
+        <div class="callout">
+          <strong>Why this matters:</strong> Understanding how the brain processes speech helps explain why everyday conversations can be challenging for people with schizophrenia.
+        </div>
+      </section>
+
+      <section class="section" id="introduction">
+        <h2>Introduction</h2>
+
+        <p>
+          Schizophrenia affects approximately 1% of the global population and is often associated with hallucinations and delusions.
+          However, one of its most persistent and disabling features is difficulty understanding spoken language, particularly in complex or noisy environments.
+        </p>
+
+        <p>
+          Speech perception depends on the auditory cortex, a brain region responsible for processing sound and language.
+          Neuroimaging studies have shown reduced auditory cortex activation in individuals with schizophrenia compared to healthy controls.
+          Interestingly, these reductions appear similar regardless of whether patients experience auditory hallucinations, suggesting that hallucinations alone do not fully explain speech-processing differences.
+        </p>
+
+        <p>
+          Beyond clinical symptoms, cognitive ability has been linked to performance on complex listening tasks in the general population.
+          This raises a key question: <strong>does cognitive ability, rather than hallucination status, help explain variability in speech-related brain activity in schizophrenia?</strong>
+        </p>
+
+        <p>
+          To address this question, we analyzed a publicly available fMRI dataset from
+          <a href="https://openneuro.org/datasets/ds004302/versions/1.0.0" target="_blank" rel="noopener noreferrer">OpenNeuro</a>,
+          which includes individuals with schizophrenia and matched healthy controls. Participants listened to individual words, full sentences,
+          and reversed speech while undergoing MRI scanning.
+        </p>
+
+        <p>
+          By comparing auditory cortex activation across speech conditions and IQ groups, this study investigates whether cognitive differences contribute
+          to systematic variation in neural speech processing in schizophrenia.
+        </p>
+      </section>
+
+      <section class="section" id="objectives">
+        <h2>Data Source</h2>
+        <p>
+          Data were obtained from <strong>OpenNeuro</strong>, a public repository for brain imaging research. The dataset includes
+          77 participants with demographic information (age, sex, IQ). For participants with schizophrenia who experience
+          hallucinations, a clinical severity measure (PSYRATS-H) was also available.
+        </p>
+
+        <h3>Listening Tasks</h3>
+        <p>During MRI scanning, participants completed three auditory tasks:</p>
+        <ul>
+          <li><strong>Single words:</strong> unrelated spoken words</li>
+          <li><strong>Sentences:</strong> short spoken sentences</li>
+          <li><strong>Reversed speech:</strong> speech-like sounds without semantic meaning</li>
+        </ul>
+
+        <h3>Study Design</h3>
+        <p>
+          A block design was used, with each listening condition presented in randomized 26-second blocks. White noise served
+          as a baseline between task blocks. The experiment lasted approximately 11 minutes. Audio was delivered through MRI-compatible
+          headphones, and participants viewed a neutral gray screen throughout the task.
+        </p>
+
+        <h3>Brain Imaging</h3>
+        <p>
+          Functional brain images were collected using a 3-Tesla MRI scanner and processed using standard fMRI preprocessing
+          and analysis techniques.
+        </p>
+      </section>
+
+      <section class="section" id="methods">
+        <h2>Methods</h2>
+        <h3>Preprocessing</h3>
+        <p>Before analysis, the brain images went through standard cleanup steps to reduce noise and improve accuracy. 
+          This included correcting for small head movements, smoothing the images to reduce random variation, and removing slow signal drifts over time. 
+          Structural brain images were also processed to isolate brain tissue and align all participants’ data to a common brain template, making comparisons across people possible.</p>
+
+        <h3>First-level Analysis</h3>
+        <p>For each participant, we analyzed how brain activity changed during each listening task compared to the baseline. 
+          We used a statistical model that estimated brain responses to words, sentences, and reversed speech separately. 
+          Head motion was included in the model to prevent it from affecting the results. 
+          This step produced brain maps showing where activity increased or decreased during each task for each individual.</p>
+
+        <h3>Second-level Analysis</h3>
+        <p>Next, we combined data across participants to look for consistent patterns at the group level. 
+          We examined healthy controls and participants with schizophrenia separately, and also directly compared the groups. 
+          These comparisons accounted for differences in age, sex, and premorbid IQ.
+
+          To ensure results were reliable and not due to chance, we applied standard statistical corrections used in brain imaging studies.
+          Only clusters of brain activity that passed strict significance thresholds were considered meaningful.</p>
+      </section>
+
+      <section class="section" id="results">
+        <h2>Results</h2>
+
+        <figure>
+          <figcaption>Sentences - IQ+</figcaption>
+          <img src="assets/schizo/cope1/cope1zstat3.png" alt="Result 1" />
+        </figure>
+
+        <figure>
+          <figcaption>Sentences - IQ-</figcaption>
+          <img src="assets/schizo/cope1/cope1zstat4.png" alt="Result 2" />
+        </figure>
+
+      <figure>
+          <figcaption>Words - IQ+</figcaption>
+          <img src="assets/schizo/cope2/cope2zstat3.png" alt="Result 3" />
+        </figure>
+
+      <figure>
+          <figcaption>Words - IQ-</figcaption>
+          <img src="assets/schizo/cope2/cope2zstat4.png" alt="Result 4" />
+        </figure>
+
+      <figure>
+          <figcaption>Reversed - IQ+</figcaption>
+          <img src="assets/schizo/cope3/cope3zstat3.png" alt="Result 5" />
+        </figure>
+
+      <figure>
+          <figcaption>Reversed - IQ-</figcaption>
+          <img src="assets/schizo/cope3/cope3zstat4.png" alt="Result 6" />
+        </figure>
+
+
+      </section>
+
+
+      <section class="section" id="conclusion">
+        <h2>Conclusion &amp; Future Work</h2>
+        <ul>
+          <li>Main conclusion</li>
+          <li>Next steps</li>
+        </ul>
+      </section>
+
+      <section class="section" id="get-in-touch">
+        <h2>Curious about the project? We’d love to chat. ☕️</h2>
+
+        <p>
+
+        </p>
+        <p>Email: <a href="mailto:rnarwastu@ucsd.edu">rnarwastu@ucsd.edu</a></p>
+        <p>GitHub: <a href="#"></a></p>
+      </section>
+
+      <footer class="page-footer">
+        <p>Hosted on GitHub Pages</p>
+      </footer>
+    </main>
+
+  </div>
+
+  <script>
+    document.getElementById("last-updated").textContent =
+      new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+  </script>
+</body>
+</html>
