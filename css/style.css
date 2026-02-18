@@ -43,7 +43,7 @@ h2, h3{
   top: 0;
   height: 100vh;
   border-right: 1px solid var(--border);
-  background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+  background: linear-gradient(180deg, #e9ebec 0%, #fbfdfd 100%);
 }
 
  .left-inner{
@@ -191,6 +191,7 @@ h2, h3{
   overflow:hidden;
   background: var(--panel);
 }
+
 .iframe-wrapper iframe{
   width: 100%;
   height: 320px;
@@ -236,4 +237,16 @@ figcaption{
     padding: 24px 18px 60px;
   }
   .iframe-wrapper iframe{ height: 260px; }
+}
+
+/* ===== Scroll progress bar ===== */
+#progress-bar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 5px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), #8b5cf6);
+  z-index: 9999;
+  transition: width 0.08s ease-out;
 }
