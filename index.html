@@ -12,9 +12,6 @@
 <body>
   <div class="split">
 
-    <!-- scroll progress bar -->
-    <div id="progress-bar"></div>
-
     <!-- LEFT: frozen while scrolling -->
     <aside class="left" aria-label="Project overview">
       <div class="left-inner">
@@ -51,6 +48,18 @@
 
     <!-- RIGHT: scrollable content -->
     <main class="right" aria-label="Main content">
+
+      <section class="section hero" id="hero">
+        <h2>Project Preview</h2>
+          <div class="iframe-wrapper">
+            <iframe
+              src="assets/stg_mask.html"
+              title="Interactive Background Viewer"
+              loading="lazy"
+              frameborder="0"
+            ></iframe>
+          </div>
+      </section>
 
       <section class="section" id="welcome">
         <h2>Welcome!</h2>
@@ -180,17 +189,6 @@
           <img src="assets/schizo/cope3/cope3zstat4.png" alt="Result 6" />
         </figure>
 
-      <section class="section hero" id="hero">
-        <!-- <h2>Project Preview</h2> -->
-          <div class="iframe-wrapper">
-            <iframe
-              src="assets/stg_mask.html"
-              title="Interactive Background Viewer"
-              loading="lazy"
-              frameborder="0"
-            ></iframe>
-          </div>
-      </section>
 
       </section>
 
@@ -221,19 +219,8 @@
   </div>
 
   <script>
-  const scrollContainer = document.querySelector(".right");
-  const progressBar = document.getElementById("progress-bar");
-
-  scrollContainer.addEventListener("scroll", () => {
-    const scrollTop = scrollContainer.scrollTop;
-    const scrollHeight =
-      scrollContainer.scrollHeight - scrollContainer.clientHeight;
-
-    const progress = (scrollTop / scrollHeight) * 100;
-    progressBar.style.width = progress + "%";
-  });
-
+    document.getElementById("last-updated").textContent =
+      new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
   </script>
-
 </body>
 </html>
