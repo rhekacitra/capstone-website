@@ -193,9 +193,23 @@ h2, h3{
 }
 .iframe-wrapper iframe{
   width: 100%;
-  height: 320px;
+  height: 360px;
   border: 0;
   display:block;
+}
+
+/* scatter plot iframe only */
+.iframe-wrapper.plot-wrapper iframe{
+  height: 700px;
+}
+
+/* taller iframe for Plotly charts */
+.iframe-wrapper.iframe-plot iframe{
+  height: 720px;
+}
+
+.iframe-wrapper.iframe-plot{
+  background: #ffffff;
 }
 
 /* figures */
@@ -237,3 +251,22 @@ figcaption{
   }
   .iframe-wrapper iframe{ height: 260px; }
 }
+
+@media (max-width: 900px){
+  .iframe-wrapper.iframe-plot iframe{
+    height: 620px;
+  }
+}
+
+/* allow full-width section for interactive plots */
+.section-full{
+  max-width: 100% !important;
+}
+
+/* full width section inside the right column */
+.right .section.section-full{
+  max-width: none !important;
+  width: 100%;
+}
+
+
