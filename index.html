@@ -10,6 +10,11 @@
 </head>
 
 <body>
+  <!-- Scroll progress bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+  
   <div class="split">
 
     <!-- LEFT: frozen while scrolling -->
@@ -154,12 +159,17 @@
 
           To ensure results were reliable and not due to chance, we applied standard statistical corrections used in brain imaging studies.
           Only clusters of brain activity that passed strict significance thresholds were considered meaningful.</p>
+
+        <h3>Region of Interest Analysis</h3>
+        <p>We focused our analysis on key hearing-related brain regions, including the auditory cortex and Heschl’s gyrus. 
+          Using a standard brain atlas, we defined these regions across both hemispheres and measured average brain activity during different speech tasks for each participant.
+          These activity measures reflect how strongly the brain responded to speech. We then examined whether differences in brain responses were related to individual IQ levels within each group.</p>
       </section>
 
       <section class="section" id="results">
         <h2>Results</h2>
         <section class="section section-full" id="scatter">
-          <h3>Interactive: IQ vs Auditory Cortex Activation</h3>
+          <h3>IQ vs Auditory Cortex Activation Interactive Plot</h3>
 
           <div class="iframe-wrapper plot-wrapper">
             <iframe
@@ -170,38 +180,22 @@
             ></iframe>
           </div>
         </section>
+        <section class="section section-full" id="pairwise">
+          <h3>Interactive Pairwise Plot</h3>
 
-        <!-- <figure>
-          <figcaption>Sentences - IQ+</figcaption>
-          <img src="assets/schizo/cope1/cope1zstat3.png" alt="Result 1" />
-        </figure>
+          <div class="iframe-wrapper plot-wrapper">
+            <iframe
+              src="assets/scatter_plot/interactive_pairwise_filters_reversed.html"
+              title="Interactive pairwise plot with filters"
+              loading="lazy"
+              frameborder="0"
+            ></iframe>
+          </div>
 
-        <figure>
-          <figcaption>Sentences - IQ-</figcaption>
-          <img src="assets/schizo/cope1/cope1zstat4.png" alt="Result 2" />
-        </figure>
-
-      <figure>
-          <figcaption>Words - IQ+</figcaption>
-          <img src="assets/schizo/cope2/cope2zstat3.png" alt="Result 3" />
-        </figure>
-
-      <figure>
-          <figcaption>Words - IQ-</figcaption>
-          <img src="assets/schizo/cope2/cope2zstat4.png" alt="Result 4" />
-        </figure>
-
-      <figure>
-          <figcaption>Reversed - IQ+</figcaption>
-          <img src="assets/schizo/cope3/cope3zstat3.png" alt="Result 5" />
-        </figure>
-
-      <figure>
-          <figcaption>Reversed - IQ-</figcaption>
-          <img src="assets/schizo/cope3/cope3zstat4.png" alt="Result 6" />
-        </figure> -->
-
-
+          <div class="callout" style="margin-top:14px;">
+            <strong>Tip:</strong> For the clearest view, select 2–4 variables and start with wider filter ranges, then narrow down.
+          </div>
+        </section>
       </section>
 
 
@@ -219,8 +213,7 @@
         <p>
 
         </p>
-        <p>Email: <a href="mailto:rnarwastu@ucsd.edu">rnarwastu@ucsd.edu</a></p>
-        <p>GitHub: <a href="#"></a></p>
+        <p>Email: <a href="mailto:ppagaduan@ucsd.edu">ppagaduan@ucsd.edu</a>, <a href="mailto:ksuherman@ucsd.edu">ksuherman@ucsd.edu</a>, <a href="mailto:rnarwastu@ucsd.edu">rnarwastu@ucsd.edu</a></p>
       </section>
 
       <footer class="page-footer">
@@ -231,8 +224,26 @@
   </div>
 
   <script>
-    document.getElementById("last-updated").textContent =
-      new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+  // last updated (safe guard)
+  const lastUpdated = document.getElementById("last-updated");
+  if (lastUpdated) {
+    lastUpdated.textContent = new Date().toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
+  }
+
+  // scroll progress bar (RIGHT column)
+  const scrollContainer = document.querySelector(".right");
+  const progressBar = document.getElementById("progress-bar");
+
+  scrollContainer.addEventListener("scroll", () => {
+    const scrollTop = scrollContainer.scrollTop;
+    const scrollHeight = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    progressBar.style.width = `${progress}%`;
+  });
   </script>
 </body>
 </html>
