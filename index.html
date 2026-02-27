@@ -37,7 +37,6 @@
 
         <nav class="left-nav" aria-label="Sections">
           <p class="left-nav-title">Sections</p>
-          <a href="#hero">Preview</a>
           <a href="#welcome">Welcome</a>
           <a href="#introduction">Introduction</a>
           <a href="#objectives">Data</a>
@@ -54,20 +53,24 @@
     <!-- RIGHT: scrollable content -->
     <main class="right" aria-label="Main content">
 
-      <section class="section hero" id="hero">
-        <h2>Project Preview</h2>
-          <div class="iframe-wrapper">
-            <iframe
-              src="assets/activation_maps/brain_view_sentences_AVH+.html"
-              title="Interactive Background Viewer"
-              loading="lazy"
-              frameborder="0"
-            ></iframe>
-          </div>
-      </section>
+      <!-- Scroll down indicator -->
+      <a href="#welcome" class="scroll-indicator" aria-label="Scroll down to continue">
+        <span class="scroll-text">Scroll down to continue</span>
+        <span class="scroll-arrow">↓</span>
+      </a>
+    </section>
 
       <section class="section" id="welcome">
-        <h2>Welcome!</h2>
+        <h2>The Influence of IQ on the Brain’s Auditory Cortex Activation in Schizophrenia
+</h2>
+        <div class="project-review-interactive">
+        <iframe
+          src="assets/activation_maps/brain_view_sentences_AVH+.html"
+          title="Interactive Background Viewer"
+          loading="lazy"
+          frameborder="0"
+        ></iframe>
+      </div>
         <p>
           This project explores how the brain processes speech in individuals with schizophrenia, with a focus on the role of cognitive ability.
           Using functional MRI data, we examine whether differences in intelligence help explain variability in auditory cortex responses during speech perception.
@@ -117,7 +120,7 @@
           hallucinations, a clinical severity measure (PSYRATS-H) was also available.
         </p>
 
-        <h3>Listening Tasks</h3>
+        <h3>➤ Listening Tasks</h3>
         <p>During MRI scanning, participants completed three auditory tasks:</p>
         <ul>
           <li><strong>Single words:</strong> unrelated spoken words</li>
@@ -125,14 +128,14 @@
           <li><strong>Reversed speech:</strong> speech-like sounds without semantic meaning</li>
         </ul>
 
-        <h3>Study Design</h3>
+        <h3>➤ Study Design</h3>
         <p>
           A block design was used, with each listening condition presented in randomized 26-second blocks. White noise served
           as a baseline between task blocks. The experiment lasted approximately 11 minutes. Audio was delivered through MRI-compatible
           headphones, and participants viewed a neutral gray screen throughout the task.
         </p>
 
-        <h3>Brain Imaging</h3>
+        <h3>➤ Brain Imaging</h3>
         <p>
           Functional brain images were collected using a 3-Tesla MRI scanner and processed using standard fMRI preprocessing
           and analysis techniques.
@@ -141,18 +144,18 @@
 
       <section class="section" id="methods">
         <h2>Methods</h2>
-        <h3>Preprocessing</h3>
+        <h3>➤ Preprocessing</h3>
         <p>Before analysis, the brain images went through standard cleanup steps to reduce noise and improve accuracy. 
           This included correcting for small head movements, smoothing the images to reduce random variation, and removing slow signal drifts over time. 
           Structural brain images were also processed to isolate brain tissue and align all participants’ data to a common brain template, making comparisons across people possible.</p>
 
-        <h3>First-level Analysis</h3>
+        <h3>➤ First-level Analysis</h3>
         <p>For each participant, we analyzed how brain activity changed during each listening task compared to the baseline. 
           We used a statistical model that estimated brain responses to words, sentences, and reversed speech separately. 
           Head motion was included in the model to prevent it from affecting the results. 
           This step produced brain maps showing where activity increased or decreased during each task for each individual.</p>
 
-        <h3>Second-level Analysis</h3>
+        <h3>➤ Second-level Analysis</h3>
         <p>Next, we combined data across participants to look for consistent patterns at the group level. 
           We examined healthy controls and participants with schizophrenia separately, and also directly compared the groups. 
           These comparisons accounted for differences in age, sex, and premorbid IQ.
@@ -168,7 +171,36 @@
 
       <section class="section" id="results">
         <h2>Results</h2>
-        <section class="section section-full" id="scatter">
+        <div class="story-card">
+          <div class="story-header">
+            <h3 class="story-title">Start with the big picture: IQ vs Auditory Cortex Activation</h3>
+            <p class="story-lede">
+              Use the filters to explore whether the IQ–activation relationship looks different across groups and contrasts.
+            </p>
+          </div>
+
+          <div class="story-grid">
+            <div class="story-instructions">
+              <p class="story-prompt"><strong>Try this:</strong></p>
+              <ol class="story-list">
+                <li>Pick a <strong>Contrast</strong> (Sentences, Words, Reversed speech).</li>
+                <li>Switch <strong>Group</strong> (HC vs AVH+/AVH−) and compare patterns.</li>
+                <li>Use the <strong>IQ slider</strong> to zoom into a range (e.g., 85–105).</li>
+              </ol>
+
+              <div class="story-takeaway">
+                <strong>Look for:</strong> changes in slope (trend), spread (variability), and outliers.
+              </div>
+
+              <a class="story-next" href="#pairwise">Next: dig into multiple variables ↓</a>
+            </div>
+          </div>
+        </div>
+              
+
+
+
+        <section class="section-full" id="scatter">
           <h3>IQ vs Auditory Cortex Activation Interactive Plot</h3>
 
           <div class="iframe-wrapper plot-wrapper">
@@ -180,9 +212,9 @@
             ></iframe>
           </div>
         </section>
-        <section class="section section-full" id="pairwise">
-          <h3>Interactive Pairwise Plot</h3>
 
+
+        <section class="section-full" id="pairwise">
           <div class="iframe-wrapper plot-wrapper">
             <iframe
               src="assets/scatter_plot/interactive_pairwise_filters_reversed.html"
@@ -197,7 +229,6 @@
           </div>
         </section>
       </section>
-
 
       <section class="section" id="conclusion">
         <h2>Conclusion &amp; Future Work</h2>
@@ -223,7 +254,7 @@
 
   </div>
 
-  <script>
+<script>
   // last updated (safe guard)
   const lastUpdated = document.getElementById("last-updated");
   if (lastUpdated) {
@@ -241,9 +272,69 @@
   scrollContainer.addEventListener("scroll", () => {
     const scrollTop = scrollContainer.scrollTop;
     const scrollHeight = scrollContainer.scrollHeight - scrollContainer.clientHeight;
-    const progress = (scrollTop / scrollHeight) * 100;
+    const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
     progressBar.style.width = `${progress}%`;
   });
-  </script>
+
+  // ===== Scrollytelling: highlight the current .section =====
+  const sections = Array.from(document.querySelectorAll(".right .section"));
+
+  // helper: clear states
+  function clearStates() {
+    sections.forEach(s => {
+      s.classList.remove("is-active");
+      s.classList.remove("is-near");
+    });
+  }
+
+  // pick the most "centered" visible section
+  function pickActiveSection(entries) {
+    const visibles = entries.filter(e => e.isIntersecting);
+    if (visibles.length === 0) return null;
+
+    // Score by closeness to the vertical center of the right panel
+    const rootRect = scrollContainer.getBoundingClientRect();
+    const rootCenter = rootRect.top + rootRect.height * 0.42; // slightly above center feels nicer
+
+    let best = visibles[0];
+    let bestScore = Infinity;
+
+    for (const e of visibles) {
+      const r = e.boundingClientRect;
+      const center = r.top + r.height / 2;
+      const score = Math.abs(center - rootCenter);
+      if (score < bestScore) {
+        bestScore = score;
+        best = e;
+      }
+    }
+    return best.target;
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    const active = pickActiveSection(entries);
+    if (!active) return;
+
+    clearStates();
+    active.classList.add("is-active");
+
+    // mark neighbors (previous/next) as "near" so transitions feel smoother
+    const idx = sections.indexOf(active);
+    if (idx > 0) sections[idx - 1].classList.add("is-near");
+    if (idx < sections.length - 1) sections[idx + 1].classList.add("is-near");
+  }, {
+    root: scrollContainer,            // ✅ IMPORTANT: right panel scroll container
+    threshold: [0.15, 0.35, 0.55, 0.75],
+    rootMargin: "-20% 0px -45% 0px"   // ✅ makes "current" snap nicely
+  });
+
+  sections.forEach(sec => io.observe(sec));
+
+  // set an initial active section on load
+  window.addEventListener("load", () => {
+    // trigger observer with a tiny scroll nudge
+    scrollContainer.dispatchEvent(new Event("scroll"));
+  });
+</script>
 </body>
 </html>

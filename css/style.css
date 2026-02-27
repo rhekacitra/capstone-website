@@ -1,14 +1,14 @@
 /* css/style.css */
 :root{
-  --bg:#ffffff;
+  --bg:#f1f1f1;
   --panel:#eeeeee;
-  --text:#0f172a;
+  --text:#0f172ae1;
   --muted:#475569;
-  --border:#e5e7eb;
+  --border:#6c7ea3;
   --link:#2563eb;
 
   --accent:#4f46e5;
-  --accentSoft:rgba(79,70,229,.12);
+  --accentSoft:rgba(78, 70, 229, 0.066);
 
   --radius:16px;
 }
@@ -30,7 +30,21 @@ h2, h3{
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
 }
 
-/* ===== Split layout ===== */
+h2 {
+  color: #330755d9;
+}
+
+p, h2, h3 {
+  max-width: 860px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+ul {
+  margin: auto;
+}
+
+/* ===== Split layout ==.sec=== */
 .split{
   display:grid;
   grid-template-columns: 420px 1fr;
@@ -42,8 +56,8 @@ h2, h3{
   position: sticky;
   top: 0;
   height: 100vh;
-  border-right: 1px solid var(--border);
-  background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+  border-right: 1.5px solid var(--border);
+  background: linear-gradient(180deg, #dddde6 100%);
 }
 
  .left-inner{
@@ -81,7 +95,7 @@ h2, h3{
   flex-wrap: wrap;
   gap: 10px;
   padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1.5px solid var(--border);
 }
 .btn{
   padding: 10px 12px;
@@ -163,19 +177,26 @@ h2, h3{
   height: 100vh;
   overflow-y: auto;
   padding: 34px 34px 70px;
+  position: relative;   /* 👈 ADD THIS */
+
+  /* page-by-page scrolling */
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 34px; /* matches your top padding */
 }
 
 .callout{
+  text-align: center;
   background: var(--accentSoft);
   padding: 14px 16px;
   border-radius: 10px;
-  margin: 18px 0;
+  max-width: 860px;
+  margin: auto auto;
   font-family: ui-sans-serif, system-ui, -apple-system;
 }
 
 /* readable width */
 .right .section{
-  max-width: 860px;
+  /* max-width: 860px; */
   padding: 18px 0;
   border-bottom: 1px solid var(--border);
 }
@@ -188,22 +209,31 @@ h2, h3{
   margin-top: 10px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  overflow:hidden;
   background: var(--panel);
 }
+
+/* default iframe behavior */
 .iframe-wrapper iframe{
   width: 100%;
-  height: 360px;
   border: 0;
-  display:block;
+  display: block;
 }
 
-/* scatter plot iframe only */
+/* ===== HERO brain plot: FULL SIZE ===== */
+.iframe-wrapper.iframe-hero{
+  height: calc(100vh - 160px);
+}
+
+.iframe-wrapper.iframe-hero iframe{
+  height: 100%;
+}
+
+/* scatter plot */
 .iframe-wrapper.plot-wrapper iframe{
   height: 700px;
-}
+} */
 
-/* taller iframe for Plotly charts */
+/* plotly pairwise (if used elsewhere) */
 .iframe-wrapper.iframe-plot iframe{
   height: 720px;
 }
@@ -285,4 +315,137 @@ figcaption{
   width: 0%;
   background: var(--accent);
   transition: width 0.1s linear;
+}
+
+
+/* ===== Scrollytelling effect for each .section (RIGHT panel) ===== */
+
+/* start faded */
+.right .section{
+  /* each section becomes a full screen page */
+  min-height: calc(100vh - 34px - 70px); /* subtract .right padding */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centers content vertically */
+}
+
+/* active section */
+.right .section.is-active{
+  opacity: 1;
+  transform: translateY(0px);
+  filter: blur(0px);
+}
+
+/* optional: slightly dim adjacent sections instead of fully faded */
+.right .section.is-near{
+  opacity: 0.45;
+  transform: translateY(6px);
+}
+
+/* accessibility */
+@media (prefers-reduced-motion: reduce){
+  .right .section{
+    transition: none;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* HERO SECTION */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Centered title overlay */
+.hero-overlay {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.hero-title {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.hero-subtitle {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #475569;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+
+  /* center within RIGHT panel */
+  left: 50%;
+  transform: translateX(-50%);
+
+  text-align: center;
+  text-decoration: none;
+  color: #475569;
+  font-size: 0.9rem;
+  z-index: 6;
+  animation: fadeUp 2s infinite;
+}
+
+.scroll-text {
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.scroll-arrow {
+  font-size: 1.6rem;
+}
+
+/* Subtle animation */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translate(-50%, 6px); }
+  50% { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, -6px); }
+}
+
+/* Optional: fade arrow once user scrolls */
+.hero.scrolled .scroll-indicator {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ===== HERO full-screen stage ===== */
+/* HERO wrapper */
+/* HERO section layout */
+.section.hero{
+  padding-top: 40px;
+}
+
+/* EXACT size like your screenshot */
+.project-review-interactive{
+  width: 900px;          /* 👈 key */
+  height: 400px;         /* 👈 key */
+  margin: 24px auto 0;   /* center horizontally */
+
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+}
+
+/* iframe fills wrapper perfectly */
+.project-review-interactive iframe{
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
 }
