@@ -8,7 +8,7 @@
   --link:#2563eb;
 
   --accent:#4f46e5;
-  --accentSoft:rgba(78, 70, 229, 0.066);
+  --accentSoft:#e1dde6;
 
   --radius:16px;
 }
@@ -56,8 +56,8 @@ ul {
   position: sticky;
   top: 0;
   height: 100vh;
-  border-right: 1.5px solid var(--border);
-  background: linear-gradient(180deg, #dddde6 100%);
+  border-right: 1px solid var(--border);
+  background: #ffffff;
 }
 
  .left-inner{
@@ -95,7 +95,7 @@ ul {
   flex-wrap: wrap;
   gap: 10px;
   padding-bottom: 16px;
-  border-bottom: 1.5px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 .btn{
   padding: 10px 12px;
@@ -448,4 +448,54 @@ figcaption{
   height: 100%;
   border: 0;
   display: block;
+}
+
+.mini-guide{
+  max-width: 1000px;
+  margin: 14px auto 18px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #e1dde6;
+  border: 1px solid rgba(15,23,42,.12);
+}
+
+.mini-guide-title{
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.mini-guide-steps{
+  margin: 0 auto 10px;
+  max-width: 780px;
+  text-align: left;
+  padding-left: 1.2rem;
+  line-height: 1.6;
+}
+
+.mini-guide-tip{
+  margin: 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+.story-intro{
+  max-width: 860px;
+  margin: 12px auto 6px;
+  text-align: center;
+}
+
+.story-highlight{
+  margin-top: 8px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.story-next{
+  display: block;
+  width: fit-content;
+  margin: 18px auto 0;
+  text-align: center;
+
+  text-decoration: none;
+  font-weight: 500;
 }
