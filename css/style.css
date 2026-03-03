@@ -230,7 +230,8 @@ ul {
 
 /* scatter plot */
 .iframe-wrapper.plot-wrapper iframe{
-  height: 700px;
+  height: 900px;
+  width: 1000px;
 } */
 
 /* plotly pairwise (if used elsewhere) */
