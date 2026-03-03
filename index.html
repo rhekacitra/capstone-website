@@ -61,8 +61,7 @@
     </section>
 
       <section class="section" id="welcome">
-        <h2>The Influence of IQ on the Brain’s Auditory Cortex Activation in Schizophrenia
-</h2>
+        <h2>How Does IQ Shape Speech Processing in Schizophrenia?</h2>
         <div class="project-review-interactive">
         <iframe
           src="assets/activation_maps/brain_view_sentences_AVH+.html"
@@ -150,106 +149,114 @@
           Structural brain images were also processed to isolate brain tissue and align all participants’ data to a common brain template, making comparisons across people possible.</p>
 
         <h3>➤ First-level Analysis</h3>
-        <p>For each participant, we analyzed how brain activity changed during each listening task compared to the baseline. 
-          We used a statistical model that estimated brain responses to words, sentences, and reversed speech separately. 
-          Head motion was included in the model to prevent it from affecting the results. 
-          This step produced brain maps showing where activity increased or decreased during each task for each individual.</p>
+        <p>We analyzed each participant’s brain data separately using a statistical method called the General Linear Model (GLM) in FSL.
+          We modeled three speech conditions: sentences, words, and reversed speech, and adjusted them using a gamma hemodynamic response function (HRF) to account for the brain’s delayed blood-flow response.
+          White noise served as the baseline, and head movement was included in the model to reduce noise. We then compared each speech condition to baseline (for example, sentences > baseline) to create activation maps for each participant,
+          which were later used in the group analysis.</p>
 
         <h3>➤ Second-level Analysis</h3>
-        <p>Next, we combined data across participants to look for consistent patterns at the group level. 
-          We examined healthy controls and participants with schizophrenia separately, and also directly compared the groups. 
-          These comparisons accounted for differences in age, sex, and premorbid IQ.
-
-          To ensure results were reliable and not due to chance, we applied standard statistical corrections used in brain imaging studies.
-          Only clusters of brain activity that passed strict significance thresholds were considered meaningful.</p>
-
-        <h3>Region of Interest Analysis</h3>
-        <p>We focused our analysis on key hearing-related brain regions, including the auditory cortex and Heschl’s gyrus. 
-          Using a standard brain atlas, we defined these regions across both hemispheres and measured average brain activity during different speech tasks for each participant.
-          These activity measures reflect how strongly the brain responded to speech. We then examined whether differences in brain responses were related to individual IQ levels within each group.</p>
+        <p>After analyzing each person’s brain data individually, we combined the results to look at patterns across groups.
+          We used a statistical approach in FSL called mixed-effects modeling, which allows us to make conclusions about the larger population, not just the people in our study.
+          First, we examined the average brain activation within each group (Healthy Controls, AVH+, and AVH−) during the speech task. To do this, we entered each participant’s brain maps into a group model that estimated the mean activation across participants.</p>
+        <p>Next, we tested whether IQ was related to brain activation. We added IQ as a continuous variable in the model and used linear modeling to see whether activation increased or decreased as IQ changed.
+          We also included age and sex as additional variables to make sure any IQ effects were not simply due to those factors.</p>
+        <h3>➤ Region of Interest Analysis</h3>
+        <p>We focused on two brain areas involved in understanding speech: the <strong>Auditory Cortex</strong> (which helps process sounds) and <strong>Right Cerebellar Crus I</strong>  (which supports more complex language and thinking).
+          For each participant, we measured how active these areas were while listening to sentences, words, and reversed speech.
+          To see whether brain activity was related to IQ, we used a simple statistical method called linear regression, 
+          which helps us understand whether higher or lower IQ scores are linked to stronger or weaker brain activation within each group.</p>
       </section>
 
-      <section class="section" id="results">
-        <h2>Results</h2>
-        <div class="story-card">
-          <div class="story-header">
-            <h3 class="story-title">Start with the big picture: IQ vs Right Crus I Activation</h3>
-            <p class="story-lede">
-              Use the filters to explore whether the IQ–activation relationship looks different across groups and contrasts.
-            </p>
-          </div>
+<section class="section" id="results">
+  <h2>Results</h2>
 
-          <div class="story-grid">
-            <div class="story-instructions">
-              <p class="story-prompt"><strong>Try this:</strong></p>
-              <ol class="story-list">
-                <li>Pick a <strong>Contrast</strong> (Sentences, Words, Reversed speech).</li>
-                <li>Switch <strong>Group</strong> (HC vs AVH+/AVH−) and compare patterns.</li>
-                <li>Use the <strong>IQ slider</strong> to zoom into a range (e.g., 85–105).</li>
-              </ol>
+  <div class="story-card">
+    <div class="story-header">
+      <h3 class="story-title">Explore the Relationship Between IQ and Brain Activation</h3>
+      <p class="story-lede">
+        In the sections below, you’ll interact with two visualizations. 
+        The first focuses on the relationship between IQ and auditory cortex activation. 
+        The second allows you to build your own comparisons across multiple variables.
+      </p>
+    </div>
 
-              <div class="story-takeaway">
-                <strong>Look for:</strong> changes in slope (trend), spread (variability), and outliers.
-              </div>
+    <div class="story-intro">
+      <p>
+        Together, these plots let you examine how cognitive ability, symptom severity, 
+        and group differences shape patterns of neural speech processing.
+      </p>
+      <p class="story-highlight">
+        As you explore, consider how trends, variability, and group differences 
+        might support or challenge the study’s main hypothesis.
+      </p>
+    </div>
 
-              <a class="story-next" href="#pairwise">Next: dig into multiple variables ↓</a>
-            </div>
-          </div>
-        </div>
-              
-        <section class="section-full" id="scatter">
-          <h3>IQ vs Right Crus I Activation Interactive Plot</h3>
-
-          <div class="iframe-wrapper plot-wrapper">
-            <iframe
-              src="assets/scatter_plot/iq_roi_scatter.html"
-              title="IQ vs ROI Activation scatterplot"
-              loading="lazy"
-              frameborder="0"
-            ></iframe>
-          </div>
-        </section>
-
-
-        <section class="section-full" id="pairwise">
-          <div class="iframe-wrapper plot-wrapper">
-            <iframe
-              src="assets/scatter_plot/interactive_pairwise_filters_reversed.html"
-              title="Interactive pairwise plot with filters"
-              loading="lazy"
-              frameborder="0"
-            ></iframe>
-          </div>
-
-          <div class="callout" style="margin-top:14px;">
-            <strong>Tip:</strong> For the clearest view, select 2–4 variables and start with wider filter ranges, then narrow down.
-          </div>
-        </section>
-      </section>
-
-      <section class="section" id="conclusion">
-        <h2>Conclusion &amp; Future Work</h2>
-        <ul>
-          <li>Main conclusion</li>
-          <li>Next steps</li>
-        </ul>
-      </section>
-
-      <section class="section" id="get-in-touch">
-        <h2>Curious about the project? We’d love to chat. ☕️</h2>
-
-        <p>
-
-        </p>
-        <p>Email: <a href="mailto:ppagaduan@ucsd.edu">ppagaduan@ucsd.edu</a>, <a href="mailto:ksuherman@ucsd.edu">ksuherman@ucsd.edu</a>, <a href="mailto:rnarwastu@ucsd.edu">rnarwastu@ucsd.edu</a></p>
-      </section>
-
-      <footer class="page-footer">
-        <p>Hosted on GitHub Pages</p>
-      </footer>
-    </main>
-
+    <a class="story-next" href="#scatter">Start exploring ↓</a>
   </div>
+</section>
+
+  <section class="section section-full" id="scatter">
+    <h2>IQ vs Auditory Cortex Activation</h2>
+
+    <div class="mini-guide">
+      <p class="mini-guide-title"><strong>Quick guide</strong></p>
+      <ol class="mini-guide-steps">
+        <li><strong>Pick a Contrast</strong> (Sentences, Words, Reversed speech).</li>
+        <li><strong>Switch Group</strong> (HC vs AVH+/AVH−) and compare patterns.</li>
+        <li><strong>Use the IQ slider</strong> to zoom into a range (e.g., 85–105).</li>
+      </ol>
+    </div>
+
+    <div class="iframe-wrapper plot-wrapper">
+      <iframe src="assets/scatter_plot/iq_roi_scatter.html" loading="lazy" frameborder="0"></iframe>
+    </div>
+  </section>
+
+  <section class="section section-full" id="pairwise">
+    <h2>Pairwise Relationships</h2>
+
+    <div class="mini-guide">
+      <p class="mini-guide-title"><strong>Quick guide</strong></p>
+      <ol class="mini-guide-steps">
+        <li><strong>Pick 2–4 variables</strong> (start with IQ + ROI activation).</li>
+        <li><strong>Filter by group</strong> to compare HC vs AVH+/AVH−.</li>
+        <li><strong>Adjust ranges slowly</strong>, if it goes blank, widen filters first.</li>
+      </ol>
+    </div>
+
+    <div class="iframe-wrapper plot-wrapper">
+      <iframe
+        src="assets/scatter_plot/interactive_pairwise_filters_reversed.html"
+        title="Interactive pairwise plot with filters"
+        loading="lazy"
+        frameborder="0"
+      ></iframe>
+    </div>
+  </section>
+
+        <section class="section" id="conclusion">
+          <h2>Conclusion &amp; Future Work</h2>
+          <ul>
+            <li>Main conclusion</li>
+            <li>Next steps</li>
+          </ul>
+        </section>
+
+        <section class="section" id="get-in-touch">
+          <h2>Curious about the project? We’d love to chat. ☕️</h2>
+
+          <p>
+
+          </p>
+          <p>Email: <a href="mailto:ppagaduan@ucsd.edu">ppagaduan@ucsd.edu</a>, <a href="mailto:ksuherman@ucsd.edu">ksuherman@ucsd.edu</a>, <a href="mailto:rnarwastu@ucsd.edu">rnarwastu@ucsd.edu</a></p>
+        </section>
+
+        <footer class="page-footer">
+          <p>Hosted on GitHub Pages</p>
+        </footer>
+      </main>
+
+    </div>
 
 <script>
   // last updated (safe guard)
