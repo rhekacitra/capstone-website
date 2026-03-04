@@ -21,7 +21,7 @@
     <aside class="left" aria-label="Project overview">
       <div class="left-inner">
         <header class="left-header">
-          <p class="kicker">Capstone • fMRI</p>
+          <p class="kicker">IQ and Schizophrenia</p>
           <h1 class="left-title">The Influence of IQ on the Brain’s Auditory Cortex Activation in Schizophrenia</h1>
           <p class="left-subtitle">Created by: Paige Pagaduan, Katrina Suherman, Rheka Narwastu</p>
           <p class="left-subtitle">Mentor: Armin Schwartzman, Gabriel Riegner </p>
@@ -29,14 +29,14 @@
 
           <div class="left-actions">
             <a class="btn btn-primary" href="#introduction">Start reading</a>
-            <a class="btn" href="https://github.com/rhekacitra/IQ-Influence-on-Brain-Auditory-Cortex-in-Schizophrenia.git" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a class="btn btn-ghost" href="https://github.com/rhekacitra/IQ-Influence-on-Brain-Auditory-Cortex-in-Schizophrenia.git" target="_blank" rel="noopener noreferrer">GitHub</a>
             <a class="btn btn-ghost" href="https://openneuro.org/datasets/ds004302/versions/1.0.0" target="_blank" rel="noopener noreferrer">Dataset</a>
             <a class="btn btn-ghost" href="#">Poster</a>
           </div>
         </header>
 
         <nav class="left-nav" aria-label="Sections">
-          <p class="left-nav-title">Sections</p>
+          <p class="left-nav-title">Table of Contents</p>
           <a href="#welcome">Welcome</a>
           <a href="#introduction">Introduction</a>
           <a href="#objectives">Data</a>
@@ -63,27 +63,27 @@
       <section class="section" id="welcome">
         <h2>How Does IQ Shape Speech Processing in Schizophrenia?</h2>
         <div class="project-review-interactive">
-        <iframe
-          src="assets/activation_maps/brain_view_sentences_AVH+.html"
-          title="Interactive Background Viewer"
-          loading="lazy"
-          frameborder="0"
-        ></iframe>
-      </div>
+          <iframe
+            src="assets/activation_maps/brain_view_sentences_AVH+.html"
+            title="Interactive Background Viewer"
+            loading="lazy"
+            frameborder="0"
+          ></iframe>
+        </div>
         <p>
           This project explores how the brain processes speech in individuals with schizophrenia, with a focus on the role of cognitive ability.
           Using functional MRI data, we examine whether differences in intelligence help explain variability in auditory cortex responses during speech perception.
         </p>
-        <div class="callout">
+        <!-- <div class="callout">
           <strong>Why this matters:</strong> Understanding how the brain processes speech helps explain why everyday conversations can be challenging for people with schizophrenia.
-        </div>
+        </div> -->
       </section>
 
       <section class="section" id="introduction">
         <h2>Introduction</h2>
 
         <p>
-          Schizophrenia affects approximately 1% of the global population and is often associated with hallucinations and delusions.
+          Schizophrenia affects approximately <strong>1%</strong> of the global population and is often associated with hallucinations and delusions.
           However, one of its most persistent and disabling features is difficulty understanding spoken language, particularly in complex or noisy environments.
         </p>
 
@@ -114,34 +114,36 @@
       <section class="section" id="objectives">
         <h2>Data Source</h2>
         <p>
-          Data were obtained from <strong>OpenNeuro</strong>, a public repository for brain imaging research. The dataset includes
-          77 participants with demographic information (age, sex, IQ). For participants with schizophrenia who experience
+          The dataset includes 77 participants with demographic information (age, sex, IQ). For participants with schizophrenia who experience
           hallucinations, a clinical severity measure (PSYRATS-H) was also available.
+          <img src="assets/participant.jpeg" alt="Block design of auditory fMRI task" class="section-image">
+
         </p>
 
         <h3>➤ Listening Tasks</h3>
-        <p>During MRI scanning, participants completed three auditory tasks:</p>
+        <p>During MRI scanning, participants completed three auditory tasks:
+        </p>
         <ul>
           <li><strong>Single words:</strong> unrelated spoken words</li>
           <li><strong>Sentences:</strong> short spoken sentences</li>
           <li><strong>Reversed speech:</strong> speech-like sounds without semantic meaning</li>
         </ul>
+        <p><img src="assets/speech_tasks.jpeg" alt="Block design of auditory fMRI task" class="section-image-speech-tasks">
+</p>
+
 
         <h3>➤ Study Design</h3>
         <p>
           A block design was used, with each listening condition presented in randomized 26-second blocks. White noise served
           as a baseline between task blocks. The experiment lasted approximately 11 minutes. Audio was delivered through MRI-compatible
-          headphones, and participants viewed a neutral gray screen throughout the task.
+          headphones, and participants viewed a neutral gray screen throughout the task. Functional brain images were collected using a 3-Tesla MRI scanner and processed using standard fMRI preprocessing
+          and analysis techniques.
+          <img src="assets/block_design.jpeg" alt="Block design of auditory fMRI task" class="section-image-block-design">
         </p>
 
-        <h3>➤ Brain Imaging</h3>
-        <p>
-          Functional brain images were collected using a 3-Tesla MRI scanner and processed using standard fMRI preprocessing
-          and analysis techniques.
-        </p>
       </section>
 
-      <section class="section" id="methods">
+      <!-- <section class="section" id="methods">
         <h2>Methods</h2>
         <h3>➤ Preprocessing</h3>
         <p>Before analysis, the brain images went through standard cleanup steps to reduce noise and improve accuracy. 
@@ -165,11 +167,99 @@
           For each participant, we measured how active these areas were while listening to sentences, words, and reversed speech.
           To see whether brain activity was related to IQ, we used a simple statistical method called linear regression, 
           which helps us understand whether higher or lower IQ scores are linked to stronger or weaker brain activation within each group.</p>
+      </section> -->
+
+          <section class="section" id="methods">
+      <h2>Methods</h2>
+
+      <div class="method-tags" role="tablist" aria-label="Methods tabs">
+        <button class="method-chip is-active" type="button" data-target="m-pre" aria-controls="m-pre" aria-selected="true">
+          1. Preprocessing
+        </button>
+        <button class="method-chip" type="button" data-target="m-first" aria-controls="m-first" aria-selected="false">
+          2. First-level Analysis
+        </button>
+        <button class="method-chip" type="button" data-target="m-second" aria-controls="m-second" aria-selected="false">
+          3. Second-level Analysis
+        </button>
+        <button class="method-chip" type="button" data-target="m-roi" aria-controls="m-roi" aria-selected="false">
+          4. Region of Interest
+        </button>
+      </div>
+
+      <div class="method-panels">
+        <article class="method-panel is-open" id="m-pre" role="tabpanel">
+          <h3>Preprocessing</h3>
+          <p>
+            Before analysis, the brain images went through standard cleanup steps to reduce noise and improve accuracy.
+            This included correcting for small head movements, smoothing the images to reduce random variation, and removing slow signal drifts over time.
+            Structural brain images were also processed to isolate brain tissue and align all participants’ data to a common brain template, making comparisons across people possible.
+          </p>
+        </article>
+
+        <article class="method-panel" id="m-first" role="tabpanel" hidden>
+          <h3>First-level Analysis</h3>
+          <p>
+            We analyzed each participant’s brain data separately using the General Linear Model (GLM) in FSL.
+            We modeled three speech conditions: sentences, words, and reversed speech, and used a gamma hemodynamic response function (HRF) to reflect the delayed brain blood-flow response.
+            White noise served as the baseline, and head movement was included to reduce noise. We then created activation maps for each condition (e.g., sentences &gt; baseline),
+            which were used later for group analysis.
+          </p>
+        </article>
+
+        <article class="method-panel" id="m-second" role="tabpanel" hidden>
+          <h3>Second-level Analysis</h3>
+          <p>
+            After analyzing each person individually, we combined results to study group patterns using mixed-effects modeling in FSL,
+            which supports conclusions about a broader population. We first estimated average activation within each group (Healthy Controls, AVH+, AVH−).
+          </p>
+          <p>
+            Next, we tested whether IQ was related to activation by adding IQ as a continuous variable. We also controlled for age and sex to reduce confounding.
+          </p>
+        </article>
+
+        <article class="method-panel" id="m-roi" role="tabpanel" hidden>
+          <h3>Region of Interest Analysis</h3>
+          <p>
+            We focused on two speech-related regions: the <strong>Auditory Cortex</strong> (sound processing) and <strong>Right Cerebellar Crus I</strong> (higher-level language and cognition).
+            For each participant, we measured activation during sentences, words, and reversed speech, then used linear regression to test whether activation was associated with IQ within each group.
+          </p>
+        </article>
+      </div>
+    </section>
+
+      <section class="section" id="results">
+        <h2>Results</h2>
+
+        <div class="story-card">
+          <div class="story-header">
+            <h3 class="story-title">Explore the Relationship Between IQ and Brain Activation</h3>
+            <p class="story-lede">
+              In the sections below, you’ll interact with two visualizations. 
+              The first focuses on the relationship between IQ and auditory cortex activation. 
+              The second allows you to build your own comparisons across multiple variables.
+            </p>
+          </div>
+
+          <div class="story-intro">
+            <p>
+              Together, these plots let you examine how cognitive ability, symptom severity, 
+              and group differences shape patterns of neural speech processing.
+            </p>
+            <p class="story-highlight">
+              As you explore, consider how trends, variability, and group differences 
+              might support or challenge the study’s main hypothesis.
+            </p>
+          </div>
+
+          <a class="story-next" href="#scatter">Start exploring ↓</a>
+        </div>
       </section>
 
-<section class="section" id="results">
-  <h2>Results</h2>
+        <section class="section section-full" id="scatter">
+          <h2>IQ vs Auditory Cortex Activation</h2>
 
+<<<<<<< HEAD
   <div class="story-card">
     <div class="story-header">
       <h3 class="story-title">Explore the Relationship Between IQ and Right Crus I</h3>
@@ -179,67 +269,60 @@
         The second allows you to build your own comparisons across multiple variables.
       </p>
     </div>
+=======
+          <div class="mini-guide">
+            <p class="mini-guide-title"><strong>Quick guide</strong></p>
+            <ol class="mini-guide-steps">
+              <li><strong>Pick a Contrast</strong> (Sentences, Words, Reversed speech).</li>
+              <li><strong>Switch Group</strong> (HC vs AVH+/AVH−) and compare patterns.</li>
+              <li><strong>Use the IQ slider</strong> to zoom into a range (e.g., 85–105).</li>
+            </ol>
+          </div>
+>>>>>>> e9aca44 (added illustrations, fixed styling)
 
-    <div class="story-intro">
-      <p>
-        Together, these plots let you examine how cognitive ability, symptom severity, 
-        and group differences shape patterns of neural speech processing.
-      </p>
-      <p class="story-highlight">
-        As you explore, consider how trends, variability, and group differences 
-        might support or challenge the study’s main hypothesis.
-      </p>
-    </div>
+          <div class="iframe-wrapper plot-wrapper">
+            <iframe src="assets/scatter_plot/iq_roi_scatter.html" loading="lazy" frameborder="0"></iframe>
+          </div>
+        </section>
 
-    <a class="story-next" href="#scatter">Start exploring ↓</a>
-  </div>
-</section>
+        <section class="section section-full" id="pairwise">
+          <h2>Pairwise Relationships</h2>
 
+<<<<<<< HEAD
   <section class="section section-full" id="scatter">
     <h2>IQ vs Right Crus I Activation</h2>
+=======
+          <div class="mini-guide">
+            <p class="mini-guide-title"><strong>Quick guide</strong></p>
+            <ol class="mini-guide-steps">
+              <li><strong>Pick 2–4 variables</strong> (start with IQ + ROI activation).</li>
+              <li><strong>Filter by group</strong> to compare HC vs AVH+/AVH−.</li>
+              <li><strong>Adjust ranges slowly</strong>, if it goes blank, widen filters first.</li>
+            </ol>
+          </div>
+>>>>>>> e9aca44 (added illustrations, fixed styling)
 
-    <div class="mini-guide">
-      <p class="mini-guide-title"><strong>Quick guide</strong></p>
-      <ol class="mini-guide-steps">
-        <li><strong>Pick a Contrast</strong> (Sentences, Words, Reversed speech).</li>
-        <li><strong>Switch Group</strong> (HC vs AVH+/AVH−) and compare patterns.</li>
-        <li><strong>Use the IQ slider</strong> to zoom into a range (e.g., 85–105).</li>
-      </ol>
-    </div>
-
-    <div class="iframe-wrapper plot-wrapper">
-      <iframe src="assets/scatter_plot/iq_roi_scatter.html" loading="lazy" frameborder="0"></iframe>
-    </div>
-  </section>
-
-  <section class="section section-full" id="pairwise">
-    <h2>Pairwise Relationships</h2>
-
-    <div class="mini-guide">
-      <p class="mini-guide-title"><strong>Quick guide</strong></p>
-      <ol class="mini-guide-steps">
-        <li><strong>Pick 2–4 variables</strong> (start with IQ + ROI activation).</li>
-        <li><strong>Filter by group</strong> to compare HC vs AVH+/AVH−.</li>
-        <li><strong>Adjust ranges slowly</strong>, if it goes blank, widen filters first.</li>
-      </ol>
-    </div>
-
-    <div class="iframe-wrapper plot-wrapper">
-      <iframe
-        src="assets/scatter_plot/interactive_pairwise_filters_reversed.html"
-        title="Interactive pairwise plot with filters"
-        loading="lazy"
-        frameborder="0"
-      ></iframe>
-    </div>
-  </section>
+          <div class="iframe-wrapper plot-wrapper">
+            <iframe
+              src="assets/scatter_plot/interactive_pairwise_filters_reversed.html"
+              title="Interactive pairwise plot with filters"
+              loading="lazy"
+              frameborder="0"
+            ></iframe>
+          </div>
+        </section>
+        
 
         <section class="section" id="conclusion">
           <h2>Conclusion &amp; Future Work</h2>
-          <ul>
-            <li>Main conclusion</li>
-            <li>Next steps</li>
-          </ul>
+          <h3>Conclusion</h3>
+          <p>This study examined how IQ relates to brain activation during speech processing. 
+            All groups showed consistent activation in the auditory cortex, highlighting its key role in speech perception. 
+            However, IQ was not significantly related to activation in this region. In contrast, IQ-related effects appeared in right cerebellar Crus I, 
+            suggesting that cerebellar regions may reflect cognitive differences in language processing.</p>
+          <h3>Next Steps</h3>
+          <p>This study was limited by a relatively small sample size and a focus on only a few brain regions. 
+            Future work with larger datasets and additional regions may better clarify how cognitive ability influences speech processing in schizophrenia.</p>
         </section>
 
         <section class="section" id="get-in-touch">
@@ -314,6 +397,35 @@
     }
     return best.target;
   }
+
+  (function () {
+    const chips = document.querySelectorAll(".method-chip");
+    const panels = document.querySelectorAll(".method-panel");
+
+    function openPanel(targetId) {
+      // toggle chips
+      chips.forEach(btn => {
+        const isActive = btn.dataset.target === targetId;
+        btn.classList.toggle("is-active", isActive);
+        btn.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+
+      // toggle panels
+      panels.forEach(panel => {
+        const isOpen = panel.id === targetId;
+        panel.hidden = !isOpen;
+        panel.classList.toggle("is-open", isOpen);
+      });
+
+      // optional: scroll the panel into view
+      const activePanel = document.getElementById(targetId);
+      if (activePanel) activePanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    chips.forEach(btn => {
+      btn.addEventListener("click", () => openPanel(btn.dataset.target));
+    });
+  })();
 
   const io = new IntersectionObserver((entries) => {
     const active = pickActiveSection(entries);
