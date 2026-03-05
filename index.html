@@ -22,7 +22,7 @@
       <div class="left-inner">
         <header class="left-header">
           <p class="kicker">IQ and Schizophrenia</p>
-          <h1 class="left-title">The Influence of IQ on the Brain’s Auditory Cortex Activation in Schizophrenia</h1>
+          <h1 class="left-title">The Influence of IQ on the Brain’s Activation in Schizophrenia</h1>
           <p class="left-subtitle">Created by: Paige Pagaduan, Katrina Suherman, Rheka Narwastu</p>
           <p class="left-subtitle">Mentor: Armin Schwartzman, Gabriel Riegner </p>
 
@@ -74,7 +74,6 @@
           Using functional MRI data, we examine whether differences in intelligence help explain variability in auditory cortex responses during speech perception.
         </p>
       </section>
-
       <section class="section" id="introduction">
         <h2>Introduction</h2>
 
@@ -84,26 +83,34 @@
         </p>
 
         <p>
-          Speech perception depends on the auditory cortex, a brain region responsible for processing sound and language.
-          Neuroimaging studies have shown reduced auditory cortex activation in individuals with schizophrenia compared to healthy controls.
-          Interestingly, these reductions appear similar regardless of whether patients experience auditory hallucinations, suggesting that hallucinations alone do not fully explain speech-processing differences.
+          Speech perception depends on several brain regions that support auditory and language processing. 
+          The <strong>auditory cortex</strong> plays a central role in detecting and interpreting sounds, while other regions such as the 
+          <strong>right cerebellar Crus I</strong> are thought to contribute to higher-level cognitive processes involved in language comprehension.
+          Neuroimaging studies have shown that people with schizophrenia often show altered activity in these speech-related brain regions compared to healthy controls.
         </p>
 
         <p>
-          Beyond clinical symptoms, cognitive ability has been linked to performance on complex listening tasks in the general population.
-          This raises a key question: <strong>does cognitive ability, rather than hallucination status, help explain variability in speech-related brain activity in schizophrenia?</strong>
+          Previous research has often tried to explain these differences by separating patients based on whether they experience auditory hallucinations. 
+          However, this approach does not fully explain why brain activity during speech processing varies so widely across individuals.
         </p>
 
         <p>
-          To address this question, we analyzed a publicly available fMRI dataset from
+          Beyond clinical symptoms, cognitive ability has been linked to performance on complex listening tasks in the general population. 
+          This raises a key question: 
+          <strong>could cognitive ability, especially IQ, help explain variability in speech-related brain activity in schizophrenia?</strong>
+        </p>
+
+        <p>
+          To investigate this question, we analyzed a publicly available fMRI dataset from 
           <a href="https://openneuro.org/datasets/ds004302/versions/1.0.0" target="_blank" rel="noopener noreferrer">OpenNeuro</a>,
-          which includes individuals with schizophrenia and matched healthy controls. Participants listened to individual words, full sentences,
-          and reversed speech while undergoing MRI scanning.
+          which includes individuals with schizophrenia and matched healthy controls. 
+          While undergoing MRI scanning, participants listened to individual words, full sentences, and reversed speech.
         </p>
 
         <p>
-          By comparing auditory cortex activation across speech conditions and IQ groups, this study investigates whether cognitive differences contribute
-          to systematic variation in neural speech processing in schizophrenia.
+          We examined how brain activation during these speech conditions varied with IQ while controlling for age and sex. 
+          In particular, we focused on two regions involved in speech and cognitive processing: the 
+          <strong>auditory cortex</strong> and the <strong>right cerebellar Crus I</strong>.
         </p>
       </section>
 
@@ -247,10 +254,6 @@
           </div>
 
           <div class="story-intro">
-            <p>
-              Together, these plots let you examine how cognitive ability, symptom severity, 
-              and group differences shape patterns of neural speech processing.
-            </p>
             <p class="story-highlight">
               As you explore, consider how trends, variability, and group differences 
               might support or challenge the study’s main hypothesis.
@@ -269,8 +272,10 @@
               <p class="mini-guide-title"><strong>Quick guide</strong></p>
               <ol class="mini-guide-steps">
                 <li><strong>Pick a Contrast</strong> (Sentences, Words, Reversed speech).</li>
-                <li><strong>Switch Group</strong> (HC vs AVH+/AVH−) and compare patterns.</li>
+                <li><strong>Switch Group</strong> and compare patterns.</li>
                 <li><strong>Use the IQ slider</strong> to zoom into a range (e.g., 85–105).</li>
+                <li><strong>Change sex</strong> and compare Female vs Male.</li>
+
               </ol>
             </div>
 
@@ -285,9 +290,8 @@
         <div class="mini-guide">
           <p class="mini-guide-title"><strong>Quick guide</strong></p>
           <ol class="mini-guide-steps">
-            <li><strong>Pick 2–4 variables</strong> (start with IQ + ROI activation).</li>
+            <li><strong>Pick 2–4 variables</strong></li>
             <li><strong>Filter by group</strong> to compare HC vs AVH+/AVH−.</li>
-            <li><strong>Adjust ranges slowly</strong>, if it goes blank, widen filters first.</li>
           </ol>
         </div>
 
