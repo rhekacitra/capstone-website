@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Interactive Pairwise Plot</title>
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+<style>
+  :root {
+    --border:#e5e7eb;
+    --muted:#475569;
+    --text:#545454;
+    --panel:#fbfbfd;
+    --bg:#ffffff;
+    --shadow: 0 10px 25px rgba(15,23,42,.06);
+  }
+
+  body {
+    margin:0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    color: #545454;
+    background: var(--bg);
+  }
+
+  .wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 18px 16px 28px;
+  }
+
+  /* --- layout --- */
+  .grid {
+    display:grid;
+    grid-template-columns: 380px 1fr;
+    gap: 16px;
+    align-items:start;
+  }
+
+  @media (max-width: 980px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  /* --- control panel --- */
+  .controls {
+    border:1px solid var(--border);
+    background: #f0f0f0;
+    padding: 16px;
+  }
+
+  .block {
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+  }
+  .block:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .sectionTitle {
+    font-size: 12px;
+    letter-spacing: .10em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+
+  /* ✅ dropdown */
+  select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    background: #fff;
+    font-size: 16px;
+    outline: none;
+  }
+  select:focus {
+    border-color: #93c5fd;
+  }
+
+  /* --- checkbox rows --- */
+  .row {
+    display:flex;
+    gap: 12px 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  label {
+    display:inline-flex;
+    gap: 10px;
+    align-items:center;
+    font-size: 16px;
+    user-select:none;
+    padding: 6px 8px;
+  }
+
+  label:hover {
+    background: rgba(15,23,42,.03);
+  }
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    transform: translateY(1px);
+    accent-color: #2563eb;
+  }
+
+  /* --- range grid --- */
+  .two {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  @media (max-width: 980px) {
+    .two { grid-template-columns: 1fr; }
+  }
+
+  /* --- range boxes (scaled down) --- */
+  .rangeBox {
+    background: #f0f0f0;
+    padding: 12px;
+    overflow: hidden;
+  }
+
+  .rangeBox .name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    margin: 0 0 8px;
+  }
+
+  .rangeBox .inputs {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .rangeBox input[type="number"] {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    background: #fff;
+
+    font-size: 20px;
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+
+    outline: none;
+  }
+
+  .rangeBox input[type="number"]:focus {
+    border-color: #93c5fd;
+  }
+
+  .rangeBox input[type="number"]::-webkit-outer-spin-button,
+  .rangeBox input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* --- buttons --- */
+  .btnRow {
+    display:flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  button {
+    border: 1px solid var(--border);
+    background: #fff;
+    padding: 12px 14px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  button:hover {
+    opacity: .95;
+    transform: translateY(-1px);
+  }
+
+  button:active {
+    transform: translateY(0px);
+  }
+
+  /* auto-update enabled */
+  #update {
+    display: none;
+  }
+
+  /* --- plot panel --- */
+  #plot {
+    overflow:hidden;
+    background:#fff;
+    min-height: 620px;
+    position: relative;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="grid">
+      <div class="controls">
+
+        <!-- ✅ NEW: Contrast filter -->
+        <div class="block">
+          <div class="sectionTitle">Contrast</div>
+          <select id="contrastSelect"></select>
+        </div>
+
+        <div class="block">
+          <div class="sectionTitle">Variables</div>
+          <div id="varChecklist" class="row"></div>
+        </div>
+
+        <div class="block">
+          <div class="sectionTitle">Filters</div>
+
+          <div style="margin-bottom:12px;">
+            <div style="font-size:13px;color:var(--muted);margin-bottom:6px;">Group</div>
+            <div id="groupChecklist" class="row"></div>
+          </div>
+
+          <div class="two" id="rangeGrid"></div>
+
+          <div class="btnRow">
+            <button id="selectAllVars">Select all vars</button>
+            <button id="clearVars">Clear vars</button>
+            <button id="resetFilters">Reset filters</button>
+            <button id="update">Update</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="plot"></div>
+    </div>
+  </div>
+
+<script>
+  const PAYLOAD = {"rowsByContrast": {"Words": [{"participant_id": "sub-01", "sex": "male", "group": "HC", "Age (years)": 47, "IQ score": 81, "PSYRATS score": 0.0, "ROI activation": 64.021598}, {"participant_id": "sub-02", "sex": "male", "group": "HC", "Age (years)": 36, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 10.967116}, {"participant_id": "sub-03", "sex": "male", "group": "HC", "Age (years)": 43, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 62.640775}, {"participant_id": "sub-04", "sex": "male", "group": "HC", "Age (years)": 25, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 87.414646}, {"participant_id": "sub-05", "sex": "female", "group": "HC", "Age (years)": 52, "IQ score": 102, "PSYRATS score": 0.0, "ROI activation": 42.478478}, {"participant_id": "sub-06", "sex": "female", "group": "HC", "Age (years)": 23, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 91.811749}, {"participant_id": "sub-07", "sex": "female", "group": "HC", "Age (years)": 38, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 56.608647}, {"participant_id": "sub-08", "sex": "male", "group": "HC", "Age (years)": 22, "IQ score": 98, "PSYRATS score": 0.0, "ROI activation": 50.360184}, {"participant_id": "sub-09", "sex": "female", "group": "HC", "Age (years)": 57, "IQ score": 112, "PSYRATS score": 0.0, "ROI activation": 81.30809}, {"participant_id": "sub-10", "sex": "female", "group": "HC", "Age (years)": 36, "IQ score": 71, "PSYRATS score": 0.0, "ROI activation": 48.050903}, {"participant_id": "sub-11", "sex": "male", "group": "HC", "Age (years)": 32, "IQ score": 102, "PSYRATS score": 0.0, "ROI activation": 85.822974}, {"participant_id": "sub-12", "sex": "female", "group": "HC", "Age (years)": 51, "IQ score": 93, "PSYRATS score": 0.0, "ROI activation": 74.177321}, {"participant_id": "sub-13", "sex": "male", "group": "HC", "Age (years)": 21, "IQ score": 87, "PSYRATS score": 0.0, "ROI activation": 95.428511}, {"participant_id": "sub-14", "sex": "male", "group": "HC", "Age (years)": 26, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 42.943359}, {"participant_id": "sub-15", "sex": "female", "group": "HC", "Age (years)": 21, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 75.649966}, {"participant_id": "sub-16", "sex": "male", "group": "HC", "Age (years)": 20, "IQ score": 110, "PSYRATS score": 0.0, "ROI activation": 91.874301}, {"participant_id": "sub-17", "sex": "male", "group": "HC", "Age (years)": 51, "IQ score": 110, "PSYRATS score": 0.0, "ROI activation": 58.001798}, {"participant_id": "sub-18", "sex": "male", "group": "HC", "Age (years)": 31, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 45.233243}, {"participant_id": "sub-19", "sex": "male", "group": "HC", "Age (years)": 60, "IQ score": 102, "PSYRATS score": 0.0, "ROI activation": 103.416432}, {"participant_id": "sub-20", "sex": "male", "group": "HC", "Age (years)": 53, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 55.890903}, {"participant_id": "sub-21", "sex": "male", "group": "HC", "Age (years)": 42, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 48.080831}, {"participant_id": "sub-22", "sex": "male", "group": "HC", "Age (years)": 58, "IQ score": 98, "PSYRATS score": 0.0, "ROI activation": 53.787354}, {"participant_id": "sub-23", "sex": "male", "group": "HC", "Age (years)": 33, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 79.720834}, {"participant_id": "sub-24", "sex": "male", "group": "HC", "Age (years)": 64, "IQ score": 114, "PSYRATS score": 0.0, "ROI activation": 58.475294}, {"participant_id": "sub-25", "sex": "male", "group": "HC", "Age (years)": 53, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 55.568584}, {"participant_id": "sub-26", "sex": "male", "group": "AVH-", "Age (years)": 38, "IQ score": 87, "PSYRATS score": 0.0, "ROI activation": 31.455133}, {"participant_id": "sub-27", "sex": "male", "group": "AVH-", "Age (years)": 31, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 81.764174}, {"participant_id": "sub-28", "sex": "male", "group": "AVH-", "Age (years)": 43, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 108.988875}, {"participant_id": "sub-29", "sex": "male", "group": "AVH-", "Age (years)": 38, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 105.47887}, {"participant_id": "sub-30", "sex": "female", "group": "AVH-", "Age (years)": 45, "IQ score": 85, "PSYRATS score": 0.0, "ROI activation": 75.233611}, {"participant_id": "sub-32", "sex": "male", "group": "AVH-", "Age (years)": 43, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 67.72236}, {"participant_id": "sub-33", "sex": "female", "group": "AVH-", "Age (years)": 55, "IQ score": 102, "PSYRATS score": 0.0, "ROI activation": 24.461823}, {"participant_id": "sub-34", "sex": "male", "group": "AVH-", "Age (years)": 41, "IQ score": 112, "PSYRATS score": 0.0, "ROI activation": 18.453305}, {"participant_id": "sub-36", "sex": "female", "group": "AVH-", "Age (years)": 51, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 69.433566}, {"participant_id": "sub-37", "sex": "male", "group": "AVH-", "Age (years)": 48, "IQ score": 89, "PSYRATS score": 0.0, "ROI activation": 56.441724}, {"participant_id": "sub-38", "sex": "male", "group": "AVH-", "Age (years)": 42, "IQ score": 114, "PSYRATS score": 0.0, "ROI activation": 38.508862}, {"participant_id": "sub-40", "sex": "male", "group": "AVH-", "Age (years)": 41, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 54.967999}, {"participant_id": "sub-42", "sex": "female", "group": "AVH-", "Age (years)": 45, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 78.618793}, {"participant_id": "sub-43", "sex": "male", "group": "AVH-", "Age (years)": 41, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 98.72798}, {"participant_id": "sub-44", "sex": "female", "group": "AVH-", "Age (years)": 50, "IQ score": 95, "PSYRATS score": 0.0, "ROI activation": 27.191026}, {"participant_id": "sub-45", "sex": "male", "group": "AVH-", "Age (years)": 61, "IQ score": 98, "PSYRATS score": 0.0, "ROI activation": 43.686244}, {"participant_id": "sub-46", "sex": "male", "group": "AVH-", "Age (years)": 43, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 38.92003}, {"participant_id": "sub-47", "sex": "male", "group": "AVH-", "Age (years)": 58, "IQ score": 83, "PSYRATS score": 0.0, "ROI activation": 23.773903}, {"participant_id": "sub-48", "sex": "female", "group": "AVH-", "Age (years)": 47, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 77.013474}, {"participant_id": "sub-49", "sex": "male", "group": "AVH-", "Age (years)": 37, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 83.667853}, {"participant_id": "sub-50", "sex": "male", "group": "AVH-", "Age (years)": 53, "IQ score": 114, "PSYRATS score": 0.0, "ROI activation": 53.767922}, {"participant_id": "sub-53", "sex": "male", "group": "AVH-", "Age (years)": 48, "IQ score": 98, "PSYRATS score": 0.0, "ROI activation": 52.794837}, {"participant_id": "sub-54", "sex": "female", "group": "AVH-", "Age (years)": 35, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 88.320473}, {"participant_id": "sub-55", "sex": "male", "group": "AVH+", "Age (years)": 44, "IQ score": 93, "PSYRATS score": 19.0, "ROI activation": 53.885726}, {"participant_id": "sub-56", "sex": "male", "group": "AVH+", "Age (years)": 37, "IQ score": 87, "PSYRATS score": 26.0, "ROI activation": 44.613225}, {"participant_id": "sub-57", "sex": "female", "group": "AVH+", "Age (years)": 40, "IQ score": 98, "PSYRATS score": 18.0, "ROI activation": 55.312745}, {"participant_id": "sub-58", "sex": "male", "group": "AVH+", "Age (years)": 32, "IQ score": 104, "PSYRATS score": 18.0, "ROI activation": 78.407726}, {"participant_id": "sub-59", "sex": "male", "group": "AVH+", "Age (years)": 25, "IQ score": 116, "PSYRATS score": 30.0, "ROI activation": 36.713522}, {"participant_id": "sub-60", "sex": "male", "group": "AVH+", "Age (years)": 32, "IQ score": 97, "PSYRATS score": 25.0, "ROI activation": 48.134978}, {"participant_id": "sub-61", "sex": "male", "group": "AVH+", "Age (years)": 31, "IQ score": 93, "PSYRATS score": 11.0, "ROI activation": 78.227638}, {"participant_id": "sub-62", "sex": "male", "group": "AVH+", "Age (years)": 52, "IQ score": 106, "PSYRATS score": 24.0, "ROI activation": 46.140836}, {"participant_id": "sub-63", "sex": "male", "group": "AVH+", "Age (years)": 19, "IQ score": 93, "PSYRATS score": 24.0, "ROI activation": 66.020655}, {"participant_id": "sub-64", "sex": "male", "group": "AVH+", "Age (years)": 34, "IQ score": 100, "PSYRATS score": 15.0, "ROI activation": 73.910461}, {"participant_id": "sub-65", "sex": "male", "group": "AVH+", "Age (years)": 60, "IQ score": 110, "PSYRATS score": 18.0, "ROI activation": 56.762402}, {"participant_id": "sub-66", "sex": "male", "group": "AVH+", "Age (years)": 44, "IQ score": 104, "PSYRATS score": 22.0, "ROI activation": 37.021176}, {"participant_id": "sub-67", "sex": "male", "group": "AVH+", "Age (years)": 52, "IQ score": 85, "PSYRATS score": 16.0, "ROI activation": 54.984939}, {"participant_id": "sub-68", "sex": "male", "group": "AVH+", "Age (years)": 24, "IQ score": 102, "PSYRATS score": 33.0, "ROI activation": 61.064894}, {"participant_id": "sub-69", "sex": "male", "group": "AVH+", "Age (years)": 48, "IQ score": 102, "PSYRATS score": 25.0, "ROI activation": 55.338356}, {"participant_id": "sub-70", "sex": "male", "group": "AVH+", "Age (years)": 44, "IQ score": 106, "PSYRATS score": 27.0, "ROI activation": 76.965255}, {"participant_id": "sub-71", "sex": "female", "group": "AVH+", "Age (years)": 66, "IQ score": 98, "PSYRATS score": 35.0, "ROI activation": 67.056891}, {"participant_id": "sub-72", "sex": "male", "group": "AVH+", "Age (years)": 64, "IQ score": 89, "PSYRATS score": 34.0, "ROI activation": 105.953265}, {"participant_id": "sub-73", "sex": "female", "group": "AVH+", "Age (years)": 20, "IQ score": 73, "PSYRATS score": 29.0, "ROI activation": 18.330454}, {"participant_id": "sub-74", "sex": "male", "group": "AVH+", "Age (years)": 42, "IQ score": 114, "PSYRATS score": 34.0, "ROI activation": 57.468526}, {"participant_id": "sub-75", "sex": "male", "group": "AVH+", "Age (years)": 32, "IQ score": 98, "PSYRATS score": 30.0, "ROI activation": 71.873678}, {"participant_id": "sub-76", "sex": "male", "group": "AVH+", "Age (years)": 39, "IQ score": 98, "PSYRATS score": 21.0, "ROI activation": 62.600242}, {"participant_id": "sub-77", "sex": "male", "group": "AVH+", "Age (years)": 41, "IQ score": 97, "PSYRATS score": 39.0, "ROI activation": 52.57793}], "Sentences": [{"participant_id": "sub-01", "sex": "male", "group": "HC", "Age (years)": 47, "IQ score": 81, "PSYRATS score": 0.0, "ROI activation": 60.519567}, {"participant_id": "sub-02", "sex": "male", "group": "HC", "Age (years)": 36, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 13.533142}, {"participant_id": "sub-03", "sex": "male", "group": "HC", "Age (years)": 43, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 44.950672}, {"participant_id": "sub-04", "sex": "male", "group": "HC", "Age (years)": 25, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 57.103496}, {"participant_id": "sub-05", "sex": "female", "group": "HC", "Age (years)": 52, "IQ score": 102, "PSYRATS score": 0.0, "ROI activation": 48.664822}, {"participant_id": "sub-06", "sex": "female", "group": "HC", "Age (years)": 23, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 80.967636}, {"participant_id": "sub-07", "sex": "female", "group": "HC", "Age (years)": 38, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 60.188376}, {"participant_id": "sub-08", "sex": "male", "group": "HC", "Age (years)": 22, "IQ score": 98, "PSYRATS score": 0.0, "ROI activation": 52.932693}, {"participant_id": "sub-09", "sex": "female", "group": "HC", "Age (years)": 57, "IQ score": 112, "PSYRATS score": 0.0, "ROI activation": 77.02124}, {"participant_id": "sub-10", "sex": "female", "group": "HC", "Age (years)": 36, "IQ score": 71, "PSYRATS score": 0.0, "ROI activation": 58.970119}, {"participant_id": "sub-11", "sex": "male", "group": "HC", "Age (years)": 32, "IQ score": 102, "PSYRATS score": 0.0, "ROI activation": 88.932417}, {"participant_id": "sub-12", "sex": "female", "group": "HC", "Age (years)": 51, "IQ score": 93, "PSYRATS score": 0.0, "ROI activation": 61.762056}, {"participant_id": "sub-13", "sex": "male", "group": "HC", "Age (years)": 21, "IQ score": 87, "PSYRATS score": 0.0, "ROI activation": 81.305472}, {"participant_id": "sub-14", "sex": "male", "group": "HC", "Age (years)": 26, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 39.541322}, {"participant_id": "sub-15", "sex": "female", "group": "HC", "Age (years)": 21, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 51.3374}, {"participant_id": "sub-16", "sex": "male", "group": "HC", "Age (years)": 20, "IQ score": 110, "PSYRATS score": 0.0, "ROI activation": 102.055553}, {"participant_id": "sub-17", "sex": "male", "group": "HC", "Age (years)": 51, "IQ score": 110, "PSYRATS score": 0.0, "ROI activation": 59.803703}, {"participant_id": "sub-18", "sex": "male", "group": "HC", "Age (years)": 31, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 76.06652}, {"participant_id": "sub-19", "sex": "male", "group": "HC", "Age (years)": 60, "IQ score": 102, "PSYRATS score": 0.0, "ROI activation": 105.309699}, {"participant_id": "sub-20", "sex": "male", "group": "HC", "Age (years)": 53, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 43.589526}, {"participant_id": "sub-21", "sex": "male", "group": "HC", "Age (years)": 42, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 24.606217}, {"participant_id": "sub-22", "sex": "male", "group": "HC", "Age (years)": 58, "IQ score": 98, "PSYRATS score": 0.0, "ROI activation": 72.13413}, {"participant_id": "sub-23", "sex": "male", "group": "HC", "Age (years)": 33, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 64.34713}, {"participant_id": "sub-24", "sex": "male", "group": "HC", "Age (years)": 64, "IQ score": 114, "PSYRATS score": 0.0, "ROI activation": 49.94566}, {"participant_id": "sub-25", "sex": "male", "group": "HC", "Age (years)": 53, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 49.512737}, {"participant_id": "sub-26", "sex": "male", "group": "AVH-", "Age (years)": 38, "IQ score": 87, "PSYRATS score": 0.0, "ROI activation": 39.395441}, {"participant_id": "sub-27", "sex": "male", "group": "AVH-", "Age (years)": 31, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 63.710266}, {"participant_id": "sub-28", "sex": "male", "group": "AVH-", "Age (years)": 43, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 104.127685}, {"participant_id": "sub-29", "sex": "male", "group": "AVH-", "Age (years)": 38, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 96.418066}, {"participant_id": "sub-30", "sex": "female", "group": "AVH-", "Age (years)": 45, "IQ score": 85, "PSYRATS score": 0.0, "ROI activation": 73.10486}, {"participant_id": "sub-32", "sex": "male", "group": "AVH-", "Age (years)": 43, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 69.848365}, {"participant_id": "sub-33", "sex": "female", "group": "AVH-", "Age (years)": 55, "IQ score": 102, "PSYRATS score": 0.0, "ROI activation": 21.456149}, {"participant_id": "sub-34", "sex": "male", "group": "AVH-", "Age (years)": 41, "IQ score": 112, "PSYRATS score": 0.0, "ROI activation": 16.936711}, {"participant_id": "sub-36", "sex": "female", "group": "AVH-", "Age (years)": 51, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 62.63829}, {"participant_id": "sub-37", "sex": "male", "group": "AVH-", "Age (years)": 48, "IQ score": 89, "PSYRATS score": 0.0, "ROI activation": 55.537942}, {"participant_id": "sub-38", "sex": "male", "group": "AVH-", "Age (years)": 42, "IQ score": 114, "PSYRATS score": 0.0, "ROI activation": 34.036405}, {"participant_id": "sub-40", "sex": "male", "group": "AVH-", "Age (years)": 41, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 54.994281}, {"participant_id": "sub-42", "sex": "female", "group": "AVH-", "Age (years)": 45, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 74.181198}, {"participant_id": "sub-43", "sex": "male", "group": "AVH-", "Age (years)": 41, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 86.374541}, {"participant_id": "sub-44", "sex": "female", "group": "AVH-", "Age (years)": 50, "IQ score": 95, "PSYRATS score": 0.0, "ROI activation": 28.988707}, {"participant_id": "sub-45", "sex": "male", "group": "AVH-", "Age (years)": 61, "IQ score": 98, "PSYRATS score": 0.0, "ROI activation": 31.107495}, {"participant_id": "sub-46", "sex": "male", "group": "AVH-", "Age (years)": 43, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 38.912446}, {"participant_id": "sub-47", "sex": "male", "group": "AVH-", "Age (years)": 58, "IQ score": 83, "PSYRATS score": 0.0, "ROI activation": 21.13538}, {"participant_id": "sub-48", "sex": "female", "group": "AVH-", "Age (years)": 47, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 73.641678}, {"participant_id": "sub-49", "sex": "male", "group": "AVH-", "Age (years)": 37, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 71.95137}, {"participant_id": "sub-50", "sex": "male", "group": "AVH-", "Age (years)": 53, "IQ score": 114, "PSYRATS score": 0.0, "ROI activation": 56.116079}, {"participant_id": "sub-53", "sex": "male", "group": "AVH-", "Age (years)": 48, "IQ score": 98, "PSYRATS score": 0.0, "ROI activation": 50.969298}, {"participant_id": "sub-54", "sex": "female", "group": "AVH-", "Age (years)": 35, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 87.019502}, {"participant_id": "sub-55", "sex": "male", "group": "AVH+", "Age (years)": 44, "IQ score": 93, "PSYRATS score": 19.0, "ROI activation": 46.032258}, {"participant_id": "sub-56", "sex": "male", "group": "AVH+", "Age (years)": 37, "IQ score": 87, "PSYRATS score": 26.0, "ROI activation": 43.798502}, {"participant_id": "sub-57", "sex": "female", "group": "AVH+", "Age (years)": 40, "IQ score": 98, "PSYRATS score": 18.0, "ROI activation": 47.314841}, {"participant_id": "sub-58", "sex": "male", "group": "AVH+", "Age (years)": 32, "IQ score": 104, "PSYRATS score": 18.0, "ROI activation": 84.780229}, {"participant_id": "sub-59", "sex": "male", "group": "AVH+", "Age (years)": 25, "IQ score": 116, "PSYRATS score": 30.0, "ROI activation": 31.791326}, {"participant_id": "sub-60", "sex": "male", "group": "AVH+", "Age (years)": 32, "IQ score": 97, "PSYRATS score": 25.0, "ROI activation": 54.168785}, {"participant_id": "sub-61", "sex": "male", "group": "AVH+", "Age (years)": 31, "IQ score": 93, "PSYRATS score": 11.0, "ROI activation": 77.579397}, {"participant_id": "sub-62", "sex": "male", "group": "AVH+", "Age (years)": 52, "IQ score": 106, "PSYRATS score": 24.0, "ROI activation": 40.543943}, {"participant_id": "sub-63", "sex": "male", "group": "AVH+", "Age (years)": 19, "IQ score": 93, "PSYRATS score": 24.0, "ROI activation": 64.704958}, {"participant_id": "sub-64", "sex": "male", "group": "AVH+", "Age (years)": 34, "IQ score": 100, "PSYRATS score": 15.0, "ROI activation": 70.704347}, {"participant_id": "sub-65", "sex": "male", "group": "AVH+", "Age (years)": 60, "IQ score": 110, "PSYRATS score": 18.0, "ROI activation": 52.794516}, {"participant_id": "sub-66", "sex": "male", "group": "AVH+", "Age (years)": 44, "IQ score": 104, "PSYRATS score": 22.0, "ROI activation": 40.251943}, {"participant_id": "sub-67", "sex": "male", "group": "AVH+", "Age (years)": 52, "IQ score": 85, "PSYRATS score": 16.0, "ROI activation": 41.340398}, {"participant_id": "sub-68", "sex": "male", "group": "AVH+", "Age (years)": 24, "IQ score": 102, "PSYRATS score": 33.0, "ROI activation": 47.709409}, {"participant_id": "sub-69", "sex": "male", "group": "AVH+", "Age (years)": 48, "IQ score": 102, "PSYRATS score": 25.0, "ROI activation": 51.498273}, {"participant_id": "sub-70", "sex": "male", "group": "AVH+", "Age (years)": 44, "IQ score": 106, "PSYRATS score": 27.0, "ROI activation": 78.894823}, {"participant_id": "sub-71", "sex": "female", "group": "AVH+", "Age (years)": 66, "IQ score": 98, "PSYRATS score": 35.0, "ROI activation": 54.082532}, {"participant_id": "sub-72", "sex": "male", "group": "AVH+", "Age (years)": 64, "IQ score": 89, "PSYRATS score": 34.0, "ROI activation": 82.242353}, {"participant_id": "sub-73", "sex": "female", "group": "AVH+", "Age (years)": 20, "IQ score": 73, "PSYRATS score": 29.0, "ROI activation": 44.989632}, {"participant_id": "sub-74", "sex": "male", "group": "AVH+", "Age (years)": 42, "IQ score": 114, "PSYRATS score": 34.0, "ROI activation": 77.275232}, {"participant_id": "sub-75", "sex": "male", "group": "AVH+", "Age (years)": 32, "IQ score": 98, "PSYRATS score": 30.0, "ROI activation": 77.223657}, {"participant_id": "sub-76", "sex": "male", "group": "AVH+", "Age (years)": 39, "IQ score": 98, "PSYRATS score": 21.0, "ROI activation": 84.117627}, {"participant_id": "sub-77", "sex": "male", "group": "AVH+", "Age (years)": 41, "IQ score": 97, "PSYRATS score": 39.0, "ROI activation": 69.967253}], "Reversed speech": [{"participant_id": "sub-01", "sex": "male", "group": "HC", "Age (years)": 47, "IQ score": 81, "PSYRATS score": 0.0, "ROI activation": 82.956673}, {"participant_id": "sub-02", "sex": "male", "group": "HC", "Age (years)": 36, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": -7.816308}, {"participant_id": "sub-03", "sex": "male", "group": "HC", "Age (years)": 43, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 69.724218}, {"participant_id": "sub-04", "sex": "male", "group": "HC", "Age (years)": 25, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 92.85769}, {"participant_id": "sub-05", "sex": "female", "group": "HC", "Age (years)": 52, "IQ score": 102, "PSYRATS score": 0.0, "ROI activation": 54.252527}, {"participant_id": "sub-06", "sex": "female", "group": "HC", "Age (years)": 23, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 103.181833}, {"participant_id": "sub-07", "sex": "female", "group": "HC", "Age (years)": 38, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 69.892384}, {"participant_id": "sub-08", "sex": "male", "group": "HC", "Age (years)": 22, "IQ score": 98, "PSYRATS score": 0.0, "ROI activation": 66.538001}, {"participant_id": "sub-09", "sex": "female", "group": "HC", "Age (years)": 57, "IQ score": 112, "PSYRATS score": 0.0, "ROI activation": 76.877441}, {"participant_id": "sub-10", "sex": "female", "group": "HC", "Age (years)": 36, "IQ score": 71, "PSYRATS score": 0.0, "ROI activation": 61.67599}, {"participant_id": "sub-11", "sex": "male", "group": "HC", "Age (years)": 32, "IQ score": 102, "PSYRATS score": 0.0, "ROI activation": 94.901303}, {"participant_id": "sub-12", "sex": "female", "group": "HC", "Age (years)": 51, "IQ score": 93, "PSYRATS score": 0.0, "ROI activation": 86.86295}, {"participant_id": "sub-13", "sex": "male", "group": "HC", "Age (years)": 21, "IQ score": 87, "PSYRATS score": 0.0, "ROI activation": 80.730165}, {"participant_id": "sub-14", "sex": "male", "group": "HC", "Age (years)": 26, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 28.487546}, {"participant_id": "sub-15", "sex": "female", "group": "HC", "Age (years)": 21, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 74.302755}, {"participant_id": "sub-16", "sex": "male", "group": "HC", "Age (years)": 20, "IQ score": 110, "PSYRATS score": 0.0, "ROI activation": 88.668231}, {"participant_id": "sub-17", "sex": "male", "group": "HC", "Age (years)": 51, "IQ score": 110, "PSYRATS score": 0.0, "ROI activation": 66.145933}, {"participant_id": "sub-18", "sex": "male", "group": "HC", "Age (years)": 31, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 61.308086}, {"participant_id": "sub-19", "sex": "male", "group": "HC", "Age (years)": 60, "IQ score": 102, "PSYRATS score": 0.0, "ROI activation": 106.719524}, {"participant_id": "sub-20", "sex": "male", "group": "HC", "Age (years)": 53, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 66.371569}, {"participant_id": "sub-21", "sex": "male", "group": "HC", "Age (years)": 42, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 46.056457}, {"participant_id": "sub-22", "sex": "male", "group": "HC", "Age (years)": 58, "IQ score": 98, "PSYRATS score": 0.0, "ROI activation": 71.636288}, {"participant_id": "sub-23", "sex": "male", "group": "HC", "Age (years)": 33, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 76.961061}, {"participant_id": "sub-24", "sex": "male", "group": "HC", "Age (years)": 64, "IQ score": 114, "PSYRATS score": 0.0, "ROI activation": 72.680464}, {"participant_id": "sub-25", "sex": "male", "group": "HC", "Age (years)": 53, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 53.897289}, {"participant_id": "sub-26", "sex": "male", "group": "AVH-", "Age (years)": 38, "IQ score": 87, "PSYRATS score": 0.0, "ROI activation": 38.155261}, {"participant_id": "sub-27", "sex": "male", "group": "AVH-", "Age (years)": 31, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 69.057118}, {"participant_id": "sub-28", "sex": "male", "group": "AVH-", "Age (years)": 43, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 126.262314}, {"participant_id": "sub-29", "sex": "male", "group": "AVH-", "Age (years)": 38, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 90.955409}, {"participant_id": "sub-30", "sex": "female", "group": "AVH-", "Age (years)": 45, "IQ score": 85, "PSYRATS score": 0.0, "ROI activation": 71.107028}, {"participant_id": "sub-32", "sex": "male", "group": "AVH-", "Age (years)": 43, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 82.524809}, {"participant_id": "sub-33", "sex": "female", "group": "AVH-", "Age (years)": 55, "IQ score": 102, "PSYRATS score": 0.0, "ROI activation": 28.595582}, {"participant_id": "sub-34", "sex": "male", "group": "AVH-", "Age (years)": 41, "IQ score": 112, "PSYRATS score": 0.0, "ROI activation": 19.317876}, {"participant_id": "sub-36", "sex": "female", "group": "AVH-", "Age (years)": 51, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 56.769064}, {"participant_id": "sub-37", "sex": "male", "group": "AVH-", "Age (years)": 48, "IQ score": 89, "PSYRATS score": 0.0, "ROI activation": 57.713235}, {"participant_id": "sub-38", "sex": "male", "group": "AVH-", "Age (years)": 42, "IQ score": 114, "PSYRATS score": 0.0, "ROI activation": 47.121693}, {"participant_id": "sub-40", "sex": "male", "group": "AVH-", "Age (years)": 41, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 69.464615}, {"participant_id": "sub-42", "sex": "female", "group": "AVH-", "Age (years)": 45, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 85.390071}, {"participant_id": "sub-43", "sex": "male", "group": "AVH-", "Age (years)": 41, "IQ score": 100, "PSYRATS score": 0.0, "ROI activation": 95.622468}, {"participant_id": "sub-44", "sex": "female", "group": "AVH-", "Age (years)": 50, "IQ score": 95, "PSYRATS score": 0.0, "ROI activation": 24.149035}, {"participant_id": "sub-45", "sex": "male", "group": "AVH-", "Age (years)": 61, "IQ score": 98, "PSYRATS score": 0.0, "ROI activation": 40.673617}, {"participant_id": "sub-46", "sex": "male", "group": "AVH-", "Age (years)": 43, "IQ score": 108, "PSYRATS score": 0.0, "ROI activation": 50.36685}, {"participant_id": "sub-47", "sex": "male", "group": "AVH-", "Age (years)": 58, "IQ score": 83, "PSYRATS score": 0.0, "ROI activation": 26.418995}, {"participant_id": "sub-48", "sex": "female", "group": "AVH-", "Age (years)": 47, "IQ score": 106, "PSYRATS score": 0.0, "ROI activation": 82.739078}, {"participant_id": "sub-49", "sex": "male", "group": "AVH-", "Age (years)": 37, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 83.367637}, {"participant_id": "sub-50", "sex": "male", "group": "AVH-", "Age (years)": 53, "IQ score": 114, "PSYRATS score": 0.0, "ROI activation": 52.14279}, {"participant_id": "sub-53", "sex": "male", "group": "AVH-", "Age (years)": 48, "IQ score": 98, "PSYRATS score": 0.0, "ROI activation": 60.347671}, {"participant_id": "sub-54", "sex": "female", "group": "AVH-", "Age (years)": 35, "IQ score": 104, "PSYRATS score": 0.0, "ROI activation": 87.052525}, {"participant_id": "sub-55", "sex": "male", "group": "AVH+", "Age (years)": 44, "IQ score": 93, "PSYRATS score": 19.0, "ROI activation": 51.595155}, {"participant_id": "sub-56", "sex": "male", "group": "AVH+", "Age (years)": 37, "IQ score": 87, "PSYRATS score": 26.0, "ROI activation": 60.440291}, {"participant_id": "sub-57", "sex": "female", "group": "AVH+", "Age (years)": 40, "IQ score": 98, "PSYRATS score": 18.0, "ROI activation": 76.893838}, {"participant_id": "sub-58", "sex": "male", "group": "AVH+", "Age (years)": 32, "IQ score": 104, "PSYRATS score": 18.0, "ROI activation": 91.325262}, {"participant_id": "sub-59", "sex": "male", "group": "AVH+", "Age (years)": 25, "IQ score": 116, "PSYRATS score": 30.0, "ROI activation": 45.190545}, {"participant_id": "sub-60", "sex": "male", "group": "AVH+", "Age (years)": 32, "IQ score": 97, "PSYRATS score": 25.0, "ROI activation": 79.510635}, {"participant_id": "sub-61", "sex": "male", "group": "AVH+", "Age (years)": 31, "IQ score": 93, "PSYRATS score": 11.0, "ROI activation": 77.292778}, {"participant_id": "sub-62", "sex": "male", "group": "AVH+", "Age (years)": 52, "IQ score": 106, "PSYRATS score": 24.0, "ROI activation": 58.329763}, {"participant_id": "sub-63", "sex": "male", "group": "AVH+", "Age (years)": 19, "IQ score": 93, "PSYRATS score": 24.0, "ROI activation": 77.215811}, {"participant_id": "sub-64", "sex": "male", "group": "AVH+", "Age (years)": 34, "IQ score": 100, "PSYRATS score": 15.0, "ROI activation": 84.877409}, {"participant_id": "sub-65", "sex": "male", "group": "AVH+", "Age (years)": 60, "IQ score": 110, "PSYRATS score": 18.0, "ROI activation": 72.233215}, {"participant_id": "sub-66", "sex": "male", "group": "AVH+", "Age (years)": 44, "IQ score": 104, "PSYRATS score": 22.0, "ROI activation": 47.270151}, {"participant_id": "sub-67", "sex": "male", "group": "AVH+", "Age (years)": 52, "IQ score": 85, "PSYRATS score": 16.0, "ROI activation": 41.680102}, {"participant_id": "sub-68", "sex": "male", "group": "AVH+", "Age (years)": 24, "IQ score": 102, "PSYRATS score": 33.0, "ROI activation": 36.444984}, {"participant_id": "sub-69", "sex": "male", "group": "AVH+", "Age (years)": 48, "IQ score": 102, "PSYRATS score": 25.0, "ROI activation": 42.433184}, {"participant_id": "sub-70", "sex": "male", "group": "AVH+", "Age (years)": 44, "IQ score": 106, "PSYRATS score": 27.0, "ROI activation": 77.355844}, {"participant_id": "sub-71", "sex": "female", "group": "AVH+", "Age (years)": 66, "IQ score": 98, "PSYRATS score": 35.0, "ROI activation": 66.794123}, {"participant_id": "sub-72", "sex": "male", "group": "AVH+", "Age (years)": 64, "IQ score": 89, "PSYRATS score": 34.0, "ROI activation": 108.551741}, {"participant_id": "sub-73", "sex": "female", "group": "AVH+", "Age (years)": 20, "IQ score": 73, "PSYRATS score": 29.0, "ROI activation": 17.768686}, {"participant_id": "sub-74", "sex": "male", "group": "AVH+", "Age (years)": 42, "IQ score": 114, "PSYRATS score": 34.0, "ROI activation": 77.755453}, {"participant_id": "sub-75", "sex": "male", "group": "AVH+", "Age (years)": 32, "IQ score": 98, "PSYRATS score": 30.0, "ROI activation": 90.452572}, {"participant_id": "sub-76", "sex": "male", "group": "AVH+", "Age (years)": 39, "IQ score": 98, "PSYRATS score": 21.0, "ROI activation": 96.6936}, {"participant_id": "sub-77", "sex": "male", "group": "AVH+", "Age (years)": 41, "IQ score": 97, "PSYRATS score": 39.0, "ROI activation": 73.231612}]}, "numCols": ["Age (years)", "IQ score", "PSYRATS score", "ROI activation"], "groups": ["AVH+", "AVH-", "HC"], "palette": {"HC": "#f4a83c", "AVH+": "#8b7aef", "AVH-": "#51d282"}, "minsByContrast": {"Words": {"Age (years)": 19.0, "IQ score": 71.0, "PSYRATS score": 0.0, "ROI activation": 10.967116}, "Sentences": {"Age (years)": 19.0, "IQ score": 71.0, "PSYRATS score": 0.0, "ROI activation": 13.533142}, "Reversed speech": {"Age (years)": 19.0, "IQ score": 71.0, "PSYRATS score": 0.0, "ROI activation": -7.816308}}, "maxsByContrast": {"Words": {"Age (years)": 66.0, "IQ score": 116.0, "PSYRATS score": 39.0, "ROI activation": 108.988875}, "Sentences": {"Age (years)": 66.0, "IQ score": 116.0, "PSYRATS score": 39.0, "ROI activation": 105.309699}, "Reversed speech": {"Age (years)": 66.0, "IQ score": 116.0, "PSYRATS score": 39.0, "ROI activation": 126.262314}}, "metaCols": ["participant_id", "sex"], "contrasts": ["Words", "Sentences", "Reversed speech"]};
+
+  // ✅ contrast state
+  const CONTRASTS = PAYLOAD.contrasts;
+  let currentContrast = CONTRASTS[0];
+
+  let ROWS = PAYLOAD.rowsByContrast[currentContrast];
+  let MINS = PAYLOAD.minsByContrast[currentContrast];
+  let MAXS = PAYLOAD.maxsByContrast[currentContrast];
+
+  const NUM_COLS = PAYLOAD.numCols;
+  const GROUPS = PAYLOAD.groups;
+  const PALETTE = PAYLOAD.palette;
+
+  function makeCheckbox(container, value, checked=true) {
+    const id = container.id + "_" + value.replace(/[^a-z0-9]/gi, "_");
+    const label = document.createElement("label");
+    label.setAttribute("for", id);
+
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.id = id;
+    cb.value = value;
+    cb.checked = checked;
+
+    const span = document.createElement("span");
+    span.textContent = value;
+
+    label.appendChild(cb);
+    label.appendChild(span);
+    container.appendChild(label);
+  }
+
+  function checkedValues(container) {
+    return Array.from(container.querySelectorAll("input[type=checkbox]"))
+      .filter(cb => cb.checked)
+      .map(cb => cb.value);
+  }
+
+  const contrastSelect = document.getElementById("contrastSelect");
+  const varChecklist = document.getElementById("varChecklist");
+  const groupChecklist = document.getElementById("groupChecklist");
+  const rangeGrid = document.getElementById("rangeGrid");
+
+  // ✅ build contrast dropdown
+  CONTRASTS.forEach(c => {
+    const opt = document.createElement("option");
+    opt.value = c;
+    opt.textContent = c;
+    contrastSelect.appendChild(opt);
+  });
+  contrastSelect.value = currentContrast;
+
+  // defaults
+  NUM_COLS.forEach(v => makeCheckbox(varChecklist, v, true));
+  GROUPS.forEach(g => makeCheckbox(groupChecklist, g, true));
+
+  function buildRangeBox(col) {
+    const box = document.createElement("div");
+    box.className = "rangeBox";
+
+    const name = document.createElement("div");
+    name.className = "name";
+    name.textContent = col;
+
+    const inputs = document.createElement("div");
+    inputs.className = "inputs";
+
+    const minInput = document.createElement("input");
+    minInput.type = "number";
+    minInput.step = "any";
+    minInput.id = "min_" + col.replace(/[^a-z0-9]/gi, "_");
+
+    const maxInput = document.createElement("input");
+    maxInput.type = "number";
+    maxInput.step = "any";
+    maxInput.id = "max_" + col.replace(/[^a-z0-9]/gi, "_");
+
+    inputs.appendChild(minInput);
+    inputs.appendChild(maxInput);
+
+    box.appendChild(name);
+    box.appendChild(inputs);
+    return box;
+  }
+
+  // create range boxes once
+  NUM_COLS.forEach(col => rangeGrid.appendChild(buildRangeBox(col)));
+
+  // ✅ apply mins/maxs for current contrast into inputs
+  function applyRangesFromContrast() {
+    NUM_COLS.forEach(col => {
+      const key = col.replace(/[^a-z0-9]/gi, "_");
+      document.getElementById("min_" + key).value = MINS[col];
+      document.getElementById("max_" + key).value = MAXS[col];
+    });
+  }
+
+  function getRanges() {
+    const ranges = {};
+    NUM_COLS.forEach(col => {
+      const key = col.replace(/[^a-z0-9]/gi, "_");
+      const minVal = parseFloat(document.getElementById("min_" + key).value);
+      const maxVal = parseFloat(document.getElementById("max_" + key).value);
+      ranges[col] = [minVal, maxVal];
+    });
+    return ranges;
+  }
+
+  function filterRows() {
+    const selectedGroups = new Set(checkedValues(groupChecklist));
+    const ranges = getRanges();
+
+    return ROWS.filter(r => {
+      if (!selectedGroups.has(r.group)) return false;
+
+      for (const col of NUM_COLS) {
+        const v = r[col];
+        const [mn, mx] = ranges[col];
+        if (!(v >= mn && v <= mx)) return false;
+      }
+      return true;
+    });
+  }
+
+  function buildSplom(rows, selectedVars) {
+    const plotDiv = document.getElementById("plot");
+
+    if (selectedVars.length < 2) {
+      Plotly.purge(plotDiv);
+      plotDiv.innerHTML = "<div style='padding:18px;color:#475569'>Select at least 2 variables.</div>";
+      return;
+    }
+    if (rows.length === 0) {
+      Plotly.purge(plotDiv);
+      plotDiv.innerHTML = "<div style='padding:18px;color:#475569'>No rows match the current filters.</div>";
+      return;
+    }
+
+    const groupsInData = ["HC","AVH+","AVH-"].filter(g => rows.some(r => r.group === g));
+    const groupColor = groupsInData.map(g => PALETTE[g] || "#999999");
+
+    const groupToNum = new Map(groupsInData.map((g, i) => [g, i]));
+    const groupNums = rows.map(r => groupToNum.get(r.group));
+
+    const colorscale = groupsInData.map((g, i) => {
+      const pos = (groupsInData.length === 1) ? 0 : i / (groupsInData.length - 1);
+      return [pos, groupColor[i]];
+    });
+
+    const dimensions = selectedVars.map(v => ({
+      label: v,
+      values: rows.map(r => r[v])
+    }));
+
+    const customdata = rows.map(r => ([
+      r.participant_id,
+      r.sex,
+      r.group
+    ]));
+
+    const trace = {
+      type: "splom",
+      dimensions: dimensions,
+      customdata: customdata,
+      marker: {
+        color: groupNums,
+        colorscale: colorscale,
+        showscale: false,
+        size: 6,
+        opacity: 0.75,
+        line: { width: 0.5, color: "white" }
+      },
+      diagonal: { visible: false },
+      hovertemplate:
+        "<b>%{customdata[2]}</b><br>" +
+        "ID: %{customdata[0]}<br>" +
+        "Sex: %{customdata[1]}<br>" +
+        "%{xaxis.title.text}: %{x}<br>" +
+        "%{yaxis.title.text}: %{y}<br>" +
+        "<extra></extra>"
+    };
+
+    // diagonal histograms by group
+    const extraTraces = [];
+    const groupsForDiag = ["HC","AVH+","AVH-"].filter(g => rows.some(r => r.group === g));
+
+    selectedVars.forEach((v, i) => {
+      groupsForDiag.forEach(g => {
+        const vals = rows
+          .filter(r => r.group === g)
+          .map(r => r[v])
+          .filter(x => Number.isFinite(x));
+
+        extraTraces.push({
+          type: "histogram",
+          x: vals,
+          xaxis: "x" + (i + 1),
+          yaxis: "y" + (i + 1),
+          name: g,
+          marker: { color: (PALETTE[g] || "#999999") },
+          opacity: 0.25,
+          showlegend: false
+        });
+      });
+    });
+
+    const layout = {
+      margin: { l: 70, r: 20, t: 20, b: 70 },
+      height: Math.max(620, 140 * selectedVars.length),
+      dragmode: "select",
+      hovermode: "closest",
+      barmode: "overlay",
+      font: {
+        family: "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
+        size: 12
+      }
+    };
+
+    const config = { responsive: true };
+    Plotly.react(plotDiv, [trace, ...extraTraces], layout, config);
+
+    // Overlay legend
+    const old = document.getElementById("customLegend");
+    if (old) old.remove();
+
+    const legend = document.createElement("div");
+    legend.id = "customLegend";
+    legend.style.position = "absolute";
+    legend.style.right = "14px";
+    legend.style.top = "14px";
+    legend.style.background = "rgba(255,255,255,0.92)";
+    legend.style.border = "1px solid #e5e7eb";
+    legend.style.borderRadius = "12px";
+    legend.style.padding = "10px 12px";
+    legend.style.fontSize = "12px";
+    legend.style.color = "#0f172a";
+    legend.style.display = "grid";
+    legend.style.gap = "6px";
+    legend.style.pointerEvents = "none";
+
+    const title = document.createElement("div");
+    title.textContent = "Group";
+    title.style.fontWeight = "600";
+    title.style.marginBottom = "4px";
+    legend.appendChild(title);
+
+    groupsInData.forEach((g, i) => {
+      const row = document.createElement("div");
+      row.style.display = "flex";
+      row.style.gap = "8px";
+      row.style.alignItems = "center";
+
+      const dot = document.createElement("span");
+      dot.style.width = "10px";
+      dot.style.height = "10px";
+      dot.style.borderRadius = "999px";
+      dot.style.background = groupColor[i];
+      dot.style.display = "inline-block";
+
+      const txt = document.createElement("span");
+      txt.textContent = g;
+
+      row.appendChild(dot);
+      row.appendChild(txt);
+      legend.appendChild(row);
+    });
+
+    plotDiv.appendChild(legend);
+  }
+
+  function updatePlot() {
+    const selectedVars = checkedValues(varChecklist);
+    const filtered = filterRows();
+    buildSplom(filtered, selectedVars);
+  }
+
+  // ✅ Contrast filter behavior
+  contrastSelect.addEventListener("change", () => {
+    currentContrast = contrastSelect.value;
+    ROWS = PAYLOAD.rowsByContrast[currentContrast];
+    MINS = PAYLOAD.minsByContrast[currentContrast];
+    MAXS = PAYLOAD.maxsByContrast[currentContrast];
+
+    // reset numeric ranges to this contrast's min/max
+    applyRangesFromContrast();
+    updatePlot();
+  });
+
+  // Buttons
+  document.getElementById("selectAllVars").addEventListener("click", () => {
+    varChecklist.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = true);
+    updatePlot();
+  });
+
+  document.getElementById("clearVars").addEventListener("click", () => {
+    varChecklist.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
+    updatePlot();
+  });
+
+  document.getElementById("resetFilters").addEventListener("click", () => {
+    groupChecklist.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = true);
+    applyRangesFromContrast();
+    updatePlot();
+  });
+
+  // Auto-update
+  function debounce(fn, wait = 150) {
+    let t;
+    return (...args) => {
+      clearTimeout(t);
+      t = setTimeout(() => fn(...args), wait);
+    };
+  }
+
+  const updatePlotDebounced = debounce(updatePlot, 150);
+
+  document
+    .querySelectorAll("#varChecklist input[type=checkbox], #groupChecklist input[type=checkbox]")
+    .forEach(el => el.addEventListener("change", updatePlotDebounced));
+
+  document
+    .querySelectorAll("#rangeGrid input[type=number]")
+    .forEach(el => el.addEventListener("input", updatePlotDebounced));
+
+  // initial render
+  applyRangesFromContrast();
+  updatePlot();
+</script>
+</body>
+</html>

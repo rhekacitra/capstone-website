@@ -1,7 +1,7 @@
 /* css/style.css */
 :root{
   --bg:#f1f1f1;
-  --panel:#eeeeee;
+  --panel:#f0f0f0;
   --text:#0f172ae1;
   --muted:#475569;
   --border:#6c7ea3;
@@ -457,7 +457,7 @@ figcaption{
   margin: 14px auto 18px;
   padding: 14px 16px;
   border-radius: 14px;
-  background: var(--accentSoft);
+  background: #f0f0f0;
   border: 1px solid rgba(15,23,42,.12);
 }
 
@@ -609,16 +609,111 @@ figcaption{
 }
 
 .section-image {
-  width: 200px;
-  height: 300px;
+  width: 540px;
+  height: 180px;
+  margin: 3rem 3rem;
 }
 
 .section-image-speech-tasks {
-  width: 600px;
-  height: 270px;
+  width: 370px;
+  height: 450px;
+  margin: 3rem 3rem;
+
 }
 
 .section-image-block-design {
-  width: 750px;
-  height: 200px;
+  width: 800px;
+  height: 150px;
+}
+
+/* Data source */
+.data-row{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  max-width: 1100px;
+  margin: 3rem 3rem;
+}
+
+.data-text{
+  flex: 1 1 520px;
+  max-width: 620px;
+  text-align: left;
+}
+
+.data-text p{
+  text-align: left;
+  margin: 0;
+  max-width: none; /* override global max-width */
+}
+
+.data-media{
+  flex: 0 0 auto;
+}
+
+/* make this image behave like a right-side figure */
+.section-image{
+  width: 520px;   /* adjust as you like */
+  height: auto;
+  margin: 0;      /* remove the big margins you had */
+  border-radius: 14px;
+  display: block;
+}
+
+/* stack on mobile */
+@media (max-width: 900px){
+  .data-row{
+    flex-direction: column;
+  }
+  .section-image{
+    width: min(520px, 92vw);
+  }
+}
+
+/* listening-tasks */
+.listening-row{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  max-width: 1100px;
+  margin: 3rem 3rem;
+}
+
+.listening-text{
+  flex: 1 1 520px;
+  max-width: 560px;
+  text-align: left;
+}
+
+.listening-text p,
+.listening-text ul{
+  text-align: left;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: none; /* override your global max-width */
+}
+
+.listening-media{
+  flex: 0 0 auto;
+}
+
+.section-image-speech-tasks{
+  width: 370px;
+  height: auto;   /* ✅ don’t force height; keeps aspect ratio */
+  margin: 0;      /* ✅ remove the big 3rem margins */
+  display: block;
+  border-radius: 14px;
+}
+
+/* stack on mobile */
+@media (max-width: 900px){
+  .listening-row{
+    flex-direction: column;
+    align-items: center;
+  }
+  .listening-text{
+    max-width: 700px;
+  }
 }
