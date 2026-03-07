@@ -42,7 +42,9 @@
           <a href="#objectives">Data</a>
           <a href="#methods">Methods</a>
           <a href="#results">Results</a>
+          <a href="#discussion">Discussion</a>
           <a href="#conclusion">Conclusion</a>
+          <a href="#acknowledgements">Acknowledgements</a>
           <a href="#get-in-touch">Get in touch</a>
         </nav>
 
@@ -71,10 +73,10 @@
         </div>
         <p>
           This project explores how the brain processes speech in individuals with schizophrenia, with a focus on the role of cognitive ability.
-          Using functional MRI data, we examine whether differences in intelligence help explain variability in auditory cortex responses during speech perception.
+          Using functional MRI data, we examine whether differences in intelligence help explain variability in brain responses during speech perception.
         </p>
       </section>
-      <section class="section" id="introduction">
+      <!-- <section class="section" id="introduction">
         <h2>Introduction</h2>
 
         <p>
@@ -112,7 +114,67 @@
           In particular, we focused on two regions involved in speech and cognitive processing: the 
           <strong>auditory cortex</strong> and the <strong>right cerebellar Crus I</strong>.
         </p>
-      </section>
+      </section> -->
+<!-- Introduction Page 1 -->
+
+    <section class="section" id="introduction">
+      <h2>Introduction</h2>
+
+      <div class="listening-row">
+        <!-- <div class="data-media">
+          <img
+            src="assets/images/schizophrenia.gif"
+            alt="Participant demographics table"
+            class="section-image-schizophrenia"
+          >
+        </div> -->
+
+      <p>
+        Schizophrenia affects approximately <strong>1%</strong> of the global population and is often associated with hallucinations and delusions.
+        However, one of its most persistent and disabling features is difficulty understanding spoken language,
+        particularly in complex or noisy environments. 
+
+        Speech perception depends on several brain regions that support auditory and language processing.
+        The <strong>auditory cortex</strong> plays a central role in detecting and interpreting sounds,
+        while other regions such as the <strong>right cerebellar Crus I</strong> contribute to higher-level
+        cognitive processes involved in language comprehension.
+      </p>
+    </div>
+    </section>
+
+
+    <!-- Introduction Page 2 -->
+    <section class="section">
+      <p>
+        Neuroimaging studies have shown that people with schizophrenia often show altered activity
+        in these speech-related brain regions compared to healthy controls.
+      </p>
+
+      <p>
+        Previous research has often tried to explain these differences by separating patients based
+        on whether they experience auditory hallucinations.
+        However, this approach does not fully explain why brain activity during speech processing
+        varies so widely across individuals.
+      </p>
+    </section>
+
+
+    <!-- Introduction Page 3 -->
+    <section class="section">
+      <p>
+        Beyond clinical symptoms, cognitive ability has been linked to performance on complex
+        listening tasks in the general population.
+        This raises a key question:
+        <strong>could cognitive ability, especially IQ, help explain variability in speech-related
+        brain activity in schizophrenia?</strong>
+      </p>
+      <p>
+        We examined how brain activation during these speech conditions varied with IQ while
+        controlling for age and sex. In particular, we focused on two regions involved in speech
+        and cognitive processing: the <strong>auditory cortex</strong> and the
+        <strong>right cerebellar Crus I</strong>.
+      </p>
+    </section>
 
       <!-- <section class="section" id="objectives">
         <h2>Data Source</h2>
@@ -138,6 +200,8 @@
           <div class="data-text">
 
             <p>
+              To investigate this question, we analyzed a publicly available fMRI dataset from <a href="https://openneuro.org/datasets/ds004302/versions/1.0.0" target="_blank" rel="noopener noreferrer">OpenNeuro</a>,
+              which includes individuals with schizophrenia and matched healthy controls.
               The dataset includes 77 participants with demographic information (age, sex, IQ).
               For participants with schizophrenia who experience hallucinations, a clinical severity measure (PSYRATS-H) was also available.
             </p>
@@ -145,7 +209,7 @@
 
           <div class="data-media">
             <img
-              src="assets/participants.jpeg"
+              src="assets/images/participants.jpeg"
               alt="Participant demographics table"
               class="section-image"
             >
@@ -155,7 +219,7 @@
         <div class="listening-row">
             <div class="listening-media">
               <img
-                src="assets/speech_tasks.gif"
+                src="assets/images/speech_tasks.gif"
                 alt="Auditory task examples"
                 class="section-image-speech-tasks">
             </div>
@@ -245,7 +309,6 @@
 
         <div class="story-card">
           <div class="story-header">
-            <h3 class="story-title">Explore the Relationship Between IQ and Brain Activation</h3>
             <p class="story-lede">
               In the sections below, you’ll interact with two visualizations. 
               The first focuses on the relationship between IQ and auditory cortex activation. 
@@ -308,7 +371,66 @@
           Across all three listening conditions (words, sentences, reversed speech), the pairwise plots show no strong linear relationships between IQ, age, symptom severity (PSYRATS), and ROI activation.
         </div> -->
       </section>
-        
+      <section class="section" id="discussion">
+        <h2>Discussion</h2>
+
+        <div class="discussion-top">
+          <div class="discussion-text">
+            <p>
+              In addition to the auditory cortex, we examined the <strong>right cerebellar Crus I</strong>, 
+              a region in the posterior cerebellum that has been linked to higher-level cognitive and language-related processes. 
+              Prior research suggests that this region may play an important role in syntactic and cognitive aspects of speech processing, 
+              making it a relevant target for understanding variability in schizophrenia.
+            </p>
+
+            <p>
+            Unlike the auditory cortex, the right cerebellar Crus I showed <strong>different patterns of association with IQ across participant groups</strong>. 
+            In the healthy control group, IQ was positively associated with activation across all three speech conditions. 
+            Among participants with schizophrenia who experienced auditory verbal hallucinations (AVH+), the relationship between IQ and activation was negative across all contrasts. 
+            In contrast, participants with schizophrenia who did not experience hallucinations (AVH−) showed positive associations across all contrasts.
+           </p>
+          </div>
+
+          <div class="discussion-figure">
+            <img
+              src="assets/images/right_crus_1.jpeg"
+              alt="Right cerebellar Crus I region"
+              class="section-image-rightcrus"
+            >
+            <p class="figure-caption">Right cerebellar Crus I region of interest.</p>
+          </div>
+        </div>
+      </section>
+    
+      <section class="section" id="discussion-two">
+        <div class="discussion-top">
+
+          <div class="discussion-figure">
+            <img
+              src="assets/images/result.jpeg"
+              alt="Right cerebellar Crus I Result Table"
+              class="section-image-table"
+            >
+            <p class="figure-caption">
+              Table 1. Linear regression results for IQ and ROI activation (COPE values) across contrasts and groups. Significant results (p < 0.05) are highlighted in red.
+            </p>
+          </div>
+
+          <div class="discussion-text">
+            <p>
+              The clearest finding emerged in the <strong>Words</strong> condition, where the relationship between IQ and right cerebellar Crus I activation was statistically significant in both schizophrenia groups. 
+              For the AVH+ group, higher IQ was associated with <strong>lower</strong> activation in right Crus I, while for the AVH− group, higher IQ was associated with <strong>higher</strong> activation. 
+              This suggests that cognitive ability may relate to speech processing differently depending on hallucination status.
+            </p>
+
+            <p>
+              Overall, these findings suggest that the right cerebellar Crus I may capture important cognitive differences in how speech is processed in schizophrenia. 
+              Rather than reflecting basic auditory perception alone, this region may be more sensitive to the higher-level language and cognitive processes that vary across individuals.
+            </p>
+          </div>
+
+        </div>
+      </section>
 
       <section class="section" id="conclusion">
         <h2>Conclusion &amp; Future Work</h2>
@@ -322,15 +444,75 @@
           Future work with larger datasets and additional regions may better clarify how cognitive ability influences speech processing in schizophrenia.</p>
       </section>
 
-      <section class="section" id="get-in-touch">
-        <h2>Curious about the project? We’d love to chat. ☕️</h2>
+      <section class="section" id="acknowledgements">
+        <h2>Huge Thanks</h2>
+        <p>Thank you for taking your time to read through our project! Feel free to reach out to us or check out our project repository.</p>
+        <p>We also want to thank Dr. Armin Schwartzman and Gabriel Riegner for their advice, feedbacks, and support throughout this project!</p>
 
-        <p>
-
-        </p>
-        <p>Email: <a href="mailto:ppagaduan@ucsd.edu">ppagaduan@ucsd.edu</a>, <a href="mailto:ksuherman@ucsd.edu">ksuherman@ucsd.edu</a>, <a href="mailto:rnarwastu@ucsd.edu">rnarwastu@ucsd.edu</a></p>
       </section>
 
+
+      <!-- <section class="section" id="get-in-touch">
+        <h2>Curious about the project? We’d love to chat. ☕️</h2>
+        <p>Email: <a href="mailto:ppagaduan@ucsd.edu">ppagaduan@ucsd.edu</a>, <a href="mailto:ksuherman@ucsd.edu">ksuherman@ucsd.edu</a>, <a href="mailto:rnarwastu@ucsd.edu">rnarwastu@ucsd.edu</a></p>
+      </section> -->
+      <section class="section" id="get-in-touch">
+        <h2>Get in Touch</h2>
+
+        <p>
+          Interested in the project or want to collaborate? Feel free to reach out to any of us.
+          We’re always happy to discuss the research, methods, or future directions.
+        </p>
+
+        <div class="contact-grid">
+
+          <!-- Paige -->
+          <div class="contact-card">
+            <img src="assets/images/paige.JPG" alt="Paige Pagaduan" class="profile-pic">
+            <h3>Paige Pagaduan</h3>
+            <p>
+              📧 <a href="mailto:ppagaduan@ucsd.edu">ppagaduan@ucsd.edu</a>
+            </p>
+            <p>
+              <a href="#" target="_blank">LinkedIn</a> •
+              <a href="#" target="_blank">GitHub</a> •
+              <a href="#" target="_blank">Website</a>
+            </p>
+          </div>
+
+          <!-- Katrina -->
+          <div class="contact-card">
+            <img src="assets/images/katrina.jpg" alt="Katrina Suherman" class="profile-pic">
+            <h3>Katrina Suherman</h3>
+
+            <p>
+              📧 <a href="mailto:ksuherman@ucsd.edu">ksuherman@ucsd.edu</a>
+            </p>
+
+            <p>
+              <a href="#">LinkedIn</a> •
+              <a href="#">GitHub</a> •
+              <a href="#">Website</a>
+            </p>
+
+          </div>
+
+          <!-- Rheka -->
+          <div class="contact-card">
+            <img src="assets/images/rheka.JPG" alt="Rheka Narwastu" class="profile-pic">
+            <h3>Rheka Narwastu</h3>
+            <p>
+              📧 <a href="mailto:rnarwastu@ucsd.edu">rnarwastu@ucsd.edu</a>
+            </p>
+            <p>
+              <a href="https://www.linkedin.com/in/rheka-narwastu/" target="_blank">LinkedIn</a> •
+              <a href="https://github.com/rhekacitra" target="_blank">GitHub</a> •
+              <a href="https://rhekacitra.github.io/portofolio/" target="_blank">Website</a>
+            </p>
+          </div>
+
+        </div>
+      </section>
         <footer class="page-footer">
           <p>Hosted on GitHub Pages</p>
         </footer>
