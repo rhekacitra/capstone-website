@@ -19,6 +19,9 @@
 
     <!-- LEFT: frozen while scrolling -->
     <aside class="left" aria-label="Project overview">
+      <button class="mobile-nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
+      ☰ Menu
+    </button>
       <div class="left-inner">
         <header class="left-header">
           <p class="kicker">IQ and Schizophrenia</p>
@@ -35,19 +38,18 @@
           </div>
         </header>
 
-        <nav class="left-nav" aria-label="Sections">
-          <p class="left-nav-title">Table of Contents</p>
-          <a href="#welcome">Welcome</a>
-          <a href="#introduction">Introduction</a>
-          <a href="#objectives">Data</a>
-          <a href="#methods">Methods</a>
-          <a href="#results">Results</a>
-          <a href="#discussion">Discussion</a>
-          <a href="#conclusion">Conclusion</a>
-          <a href="#acknowledgements">Acknowledgements</a>
-          <a href="#get-in-touch">Get in touch</a>
-        </nav>
-
+      <nav class="left-nav" id="mobile-nav" aria-label="Sections">
+        <p class="left-nav-title">Table of Contents</p>
+        <a href="#welcome">Welcome</a>
+        <a href="#introduction">Introduction</a>
+        <a href="#objectives">Data</a>
+        <a href="#methods">Methods</a>
+        <a href="#results">Results</a>
+        <a href="#discussion">Discussion</a>
+        <a href="#conclusion">Conclusion</a>
+        <a href="#acknowledgements">Acknowledgements</a>
+        <a href="#get-in-touch">Get in touch</a>
+      </nav>
 
       </div>
     </aside>
@@ -118,62 +120,34 @@
 <!-- Introduction Page 1 -->
 
     <section class="section" id="introduction">
-      <h2>Introduction</h2>
+      <h2>Did you know?</h2>
 
-      <div class="listening-row">
-        <!-- <div class="data-media">
-          <img
-            src="assets/images/schizophrenia.gif"
-            alt="Participant demographics table"
-            class="section-image-schizophrenia"
-          >
-        </div> -->
+      <div class="story-intro">
 
-      <p>
-        Schizophrenia affects approximately <strong>1%</strong> of the global population and is often associated with hallucinations and delusions.
-        However, one of its most persistent and disabling features is difficulty understanding spoken language,
-        particularly in complex or noisy environments. 
+        <p>
+          About <strong>1 in 100 people worldwide</strong> live with schizophrenia, and many experience difficulty understanding spoken language, even during everyday conversations. 
+          Speech perception relies on several brain regions that process sounds and meaning. 
+          The <strong>auditory cortex</strong> helps detect and interpret sounds, while areas such as the 
+          <strong>right cerebellar Crus I</strong> support higher-level cognitive processes involved in language comprehension.
+        </p>
 
-        Speech perception depends on several brain regions that support auditory and language processing.
-        The <strong>auditory cortex</strong> plays a central role in detecting and interpreting sounds,
-        while other regions such as the <strong>right cerebellar Crus I</strong> contribute to higher-level
-        cognitive processes involved in language comprehension.
-      </p>
-    </div>
-    </section>
+        <p>
+          Neuroimaging studies have shown that people with schizophrenia often show altered activity in these speech-related brain regions compared to healthy controls. 
+          Previous research has mainly tried to explain these differences by separating patients based on whether they experience auditory hallucinations, but this does not fully explain why brain activity during speech processing varies so widely across individuals.
+        </p>
 
+        <p>
+          This raises an important question: 
+          <strong>could cognitive ability, particularly IQ, help explain variability in speech-related brain activity in schizophrenia?</strong>
+        </p>
 
-    <!-- Introduction Page 2 -->
-    <section class="section">
-      <p>
-        Neuroimaging studies have shown that people with schizophrenia often show altered activity
-        in these speech-related brain regions compared to healthy controls.
-      </p>
+        <p>
+          In this project, we examined how brain activation during different speech conditions varies with IQ while controlling for age and sex. 
+          We focused on two regions involved in speech and cognitive processing: the 
+          <strong>auditory cortex</strong> and the <strong>right cerebellar Crus I</strong>.
+        </p>
 
-      <p>
-        Previous research has often tried to explain these differences by separating patients based
-        on whether they experience auditory hallucinations.
-        However, this approach does not fully explain why brain activity during speech processing
-        varies so widely across individuals.
-      </p>
-    </section>
-
-
-    <!-- Introduction Page 3 -->
-    <section class="section">
-      <p>
-        Beyond clinical symptoms, cognitive ability has been linked to performance on complex
-        listening tasks in the general population.
-        This raises a key question:
-        <strong>could cognitive ability, especially IQ, help explain variability in speech-related
-        brain activity in schizophrenia?</strong>
-      </p>
-      <p>
-        We examined how brain activation during these speech conditions varied with IQ while
-        controlling for age and sex. In particular, we focused on two regions involved in speech
-        and cognitive processing: the <strong>auditory cortex</strong> and the
-        <strong>right cerebellar Crus I</strong>.
-      </p>
+      </div>
     </section>
 
       <!-- <section class="section" id="objectives">
@@ -193,54 +167,56 @@
           <li><strong>Reversed speech:</strong> speech-like sounds without semantic meaning</li>
         </ul>
         <p><img src="assets/speech_tasks.gif" alt="Block design of auditory fMRI task" class="section-image-speech-tasks"></p> -->
-      <section class="section" id="objectives">
-        <h2>Data Source</h2>
+<section class="section" id="objectives">
+  <h2>Data Source</h2>
 
-        <div class="data-row">
-          <div class="data-text">
+  <div class="discussion-top">
+    <div class="data-text">
+      <p>
+        To investigate this question, we analyzed a publicly available fMRI dataset from
+        <a href="https://openneuro.org/datasets/ds004302/versions/1.0.0" target="_blank" rel="noopener noreferrer">OpenNeuro</a>,
+        which includes individuals with schizophrenia and matched healthy controls.
+        The dataset includes 77 participants with demographic information (age, sex, IQ).
+        For participants with schizophrenia who experience hallucinations, a clinical severity measure (PSYRATS-H) was also available.
+      </p>
+    </div>
 
-            <p>
-              To investigate this question, we analyzed a publicly available fMRI dataset from <a href="https://openneuro.org/datasets/ds004302/versions/1.0.0" target="_blank" rel="noopener noreferrer">OpenNeuro</a>,
-              which includes individuals with schizophrenia and matched healthy controls.
-              The dataset includes 77 participants with demographic information (age, sex, IQ).
-              For participants with schizophrenia who experience hallucinations, a clinical severity measure (PSYRATS-H) was also available.
-            </p>
-          </div>
+    <div class="data-media">
+      <img
+        src="assets/images/participants.jpeg"
+        alt="Participant demographics table"
+        class="section-image"
+      >
+    </div>
+  </div>
 
-          <div class="data-media">
-            <img
-              src="assets/images/participants.jpeg"
-              alt="Participant demographics table"
-              class="section-image"
-            >
-          </div>
-        </div>
+  <div class="listening-row">
+    <div class="listening-media">
+      <img
+        src="assets/images/speech_tasks.gif"
+        alt="Auditory task examples"
+        class="section-image-speech-tasks"
+      >
+    </div>
 
-        <div class="listening-row">
-            <div class="listening-media">
-              <img
-                src="assets/images/speech_tasks.gif"
-                alt="Auditory task examples"
-                class="section-image-speech-tasks">
-            </div>
-            <div class="listening-text">
-            <h3>➤ Listening Tasks</h3>
-            <p>During MRI scanning, participants completed three auditory tasks:</p>
-            <ul>
-              <li><strong>Single words:</strong> unrelated spoken words</li>
-              <li><strong>Sentences:</strong> short spoken sentences</li>
-              <li><strong>Reversed speech:</strong> speech-like sounds without semantic meaning</li>
-            </ul>
+    <div class="listening-text">
+      <h3>➤ Listening Tasks</h3>
+      <p>During MRI scanning, participants completed three auditory tasks:</p>
+      <ul>
+        <li><strong>Single words:</strong> unrelated spoken words</li>
+        <li><strong>Sentences:</strong> short spoken sentences</li>
+        <li><strong>Reversed speech:</strong> speech-like sounds without semantic meaning</li>
+      </ul>
 
-            <p>
-            A block design was used, with each listening condition presented in randomized 26-second blocks. White noise served
-            as a baseline between task blocks. The experiment lasted approximately 11 minutes. Audio was delivered through MRI-compatible
-            headphones, and participants viewed a neutral gray screen throughout the task. Functional brain images were collected using a 3-Tesla MRI scanner and processed using standard fMRI preprocessing
-            and analysis techniques.
-            </p>
-          </div>
-
-        </div>
+      <p>
+        A block design was used, with each listening condition presented in randomized 26-second blocks. White noise served
+        as a baseline between task blocks. The experiment lasted approximately 11 minutes. Audio was delivered through MRI-compatible
+        headphones, and participants viewed a neutral gray screen throughout the task. Functional brain images were collected using a
+        3-Tesla MRI scanner and processed using standard fMRI preprocessing and analysis techniques.
+      </p>
+    </div>
+  </div>
+</section>
 
 
       </section>
@@ -402,35 +378,35 @@
         </div>
       </section>
     
-      <section class="section" id="discussion-two">
-        <div class="discussion-top">
+    <section class="section" id="discussion-two">
+      <div class="discussion-top">
 
-          <div class="discussion-figure">
-            <img
-              src="assets/images/result.jpeg"
-              alt="Right cerebellar Crus I Result Table"
-              class="section-image-table"
-            >
-            <p class="figure-caption">
-              Table 1. Linear regression results for IQ and ROI activation (COPE values) across contrasts and groups. Significant results (p < 0.05) are highlighted in red.
-            </p>
-          </div>
-
-          <div class="discussion-text">
-            <p>
-              The clearest finding emerged in the <strong>Words</strong> condition, where the relationship between IQ and right cerebellar Crus I activation was statistically significant in both schizophrenia groups. 
-              For the AVH+ group, higher IQ was associated with <strong>lower</strong> activation in right Crus I, while for the AVH− group, higher IQ was associated with <strong>higher</strong> activation. 
-              This suggests that cognitive ability may relate to speech processing differently depending on hallucination status.
-            </p>
-
-            <p>
-              Overall, these findings suggest that the right cerebellar Crus I may capture important cognitive differences in how speech is processed in schizophrenia. 
-              Rather than reflecting basic auditory perception alone, this region may be more sensitive to the higher-level language and cognitive processes that vary across individuals.
-            </p>
-          </div>
-
+        <div class="discussion-figure">
+          <img
+            src="assets/images/result.jpeg"
+            alt="Right cerebellar Crus I Result Table"
+            class="section-image-table"
+          >
+          <p class="figure-caption">
+            Table 1. Linear regression results for IQ and ROI activation (COPE values) across contrasts and groups. Significant results (p < 0.05) are highlighted in red.
+          </p>
         </div>
-      </section>
+
+        <div class="discussion-text">
+          <p>
+            The clearest finding emerged in the <strong>Words</strong> condition, where the relationship between IQ and right cerebellar Crus I activation was statistically significant in both schizophrenia groups. 
+            For the AVH+ group, higher IQ was associated with <strong>lower</strong> activation in right Crus I, while for the AVH− group, higher IQ was associated with <strong>higher</strong> activation. 
+            This suggests that cognitive ability may relate to speech processing differently depending on hallucination status.
+          </p>
+
+          <p>
+            Overall, these findings suggest that the right cerebellar Crus I may capture important cognitive differences in how speech is processed in schizophrenia. 
+            Rather than reflecting basic auditory perception alone, this region may be more sensitive to the higher-level language and cognitive processes that vary across individuals.
+          </p>
+        </div>
+
+      </div>
+    </section>
 
       <section class="section" id="conclusion">
         <h2>Conclusion &amp; Future Work</h2>
@@ -535,12 +511,29 @@
   const scrollContainer = document.querySelector(".right");
   const progressBar = document.getElementById("progress-bar");
 
-  scrollContainer.addEventListener("scroll", () => {
-    const scrollTop = scrollContainer.scrollTop;
-    const scrollHeight = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+  function updateProgressBar() {
+    const isMobile = window.innerWidth <= 900;
+    const target = isMobile ? document.documentElement : scrollContainer;
+
+    const scrollTop = isMobile
+      ? window.scrollY || document.documentElement.scrollTop
+      : target.scrollTop;
+
+    const scrollHeight = isMobile
+      ? document.documentElement.scrollHeight - window.innerHeight
+      : target.scrollHeight - target.clientHeight;
+
     const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
     progressBar.style.width = `${progress}%`;
-  });
+  }
+
+  if (scrollContainer) {
+    scrollContainer.addEventListener("scroll", updateProgressBar);
+  }
+  window.addEventListener("scroll", updateProgressBar);
+  window.addEventListener("resize", updateProgressBar);
+  window.addEventListener("load", updateProgressBar);
+
 
   // ===== Scrollytelling: highlight the current .section =====
   const sections = Array.from(document.querySelectorAll(".right .section"));
@@ -606,30 +599,69 @@
     });
   })();
 
-  const io = new IntersectionObserver((entries) => {
-    const active = pickActiveSection(entries);
-    if (!active) return;
+  // const io = new IntersectionObserver((entries) => {
+  //   const active = pickActiveSection(entries);
+  //   if (!active) return;
 
-    clearStates();
-    active.classList.add("is-active");
+  //   clearStates();
+  //   active.classList.add("is-active");
 
-    // mark neighbors (previous/next) as "near" so transitions feel smoother
-    const idx = sections.indexOf(active);
-    if (idx > 0) sections[idx - 1].classList.add("is-near");
-    if (idx < sections.length - 1) sections[idx + 1].classList.add("is-near");
-  }, {
-    root: scrollContainer,            // ✅ IMPORTANT: right panel scroll container
-    threshold: [0.15, 0.35, 0.55, 0.75],
-    rootMargin: "-20% 0px -45% 0px"   // ✅ makes "current" snap nicely
-  });
+  //   // mark neighbors (previous/next) as "near" so transitions feel smoother
+  //   const idx = sections.indexOf(active);
+  //   if (idx > 0) sections[idx - 1].classList.add("is-near");
+  //   if (idx < sections.length - 1) sections[idx + 1].classList.add("is-near");
+  // }, {
+  //   root: scrollContainer,            // ✅ IMPORTANT: right panel scroll container
+  //   threshold: [0.15, 0.35, 0.55, 0.75],
+  //   rootMargin: "-20% 0px -45% 0px"   // ✅ makes "current" snap nicely
+  // });
 
-  sections.forEach(sec => io.observe(sec));
+  // sections.forEach(sec => io.observe(sec));
+    if (window.innerWidth > 900) {
+    const io = new IntersectionObserver((entries) => {
+      const active = pickActiveSection(entries);
+      if (!active) return;
+
+      clearStates();
+      active.classList.add("is-active");
+
+      const idx = sections.indexOf(active);
+      if (idx > 0) sections[idx - 1].classList.add("is-near");
+      if (idx < sections.length - 1) sections[idx + 1].classList.add("is-near");
+    }, {
+      root: scrollContainer,
+      threshold: [0.15, 0.35, 0.55, 0.75],
+      rootMargin: "-20% 0px -45% 0px"
+    });
+
+    sections.forEach(sec => io.observe(sec));
+  }
 
   // set an initial active section on load
   window.addEventListener("load", () => {
     // trigger observer with a tiny scroll nudge
     scrollContainer.dispatchEvent(new Event("scroll"));
   });
+
+
+  const mobileToggle = document.querySelector(".mobile-nav-toggle");
+  const mobileNav = document.getElementById("mobile-nav");
+
+  if (mobileToggle && mobileNav) {
+    mobileToggle.addEventListener("click", () => {
+      const open = mobileNav.classList.toggle("is-open");
+      mobileToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+
+    mobileNav.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        if (window.innerWidth <= 900) {
+          mobileNav.classList.remove("is-open");
+          mobileToggle.setAttribute("aria-expanded", "false");
+        }
+      });
+    });
+  }
 </script>
 </body>
 </html>
