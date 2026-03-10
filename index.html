@@ -19,10 +19,10 @@
 
     <!-- LEFT: frozen while scrolling -->
     <aside class="left" aria-label="Project overview">
-      <button class="mobile-nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
-      ☰ Menu
-    </button>
       <div class="left-inner">
+        <button class="mobile-nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
+          ☰ Menu
+        </button>
         <header class="left-header">
           <p class="kicker">IQ and Schizophrenia</p>
           <h1 class="left-title">The Influence of IQ on the Brain’s Activation in Schizophrenia</h1>
@@ -32,9 +32,9 @@
 
           <div class="left-actions">
             <a class="btn btn-primary" href="#introduction">Start reading</a>
+            <a class="btn btn-ghost" href="https://drive.google.com/file/d/1EufIDtwMIApeEQgEEhJD_Rj12h35SNBg/view?usp=sharing">Paper</a>
             <a class="btn btn-ghost" href="https://github.com/rhekacitra/IQ-Influence-on-Brain-Auditory-Cortex-in-Schizophrenia.git" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a class="btn btn-ghost" href="https://openneuro.org/datasets/ds004302/versions/1.0.0" target="_blank" rel="noopener noreferrer">Dataset</a>
-            <a class="btn btn-ghost" href="#">Poster</a>
+            <a class="btn btn-ghost" href="https://drive.google.com/file/d/1SK2KI2bNsOlszTa-MGPCij3lFNJ3OyTp/view?usp=sharing">Poster</a>
           </div>
         </header>
 
@@ -47,6 +47,7 @@
         <a href="#results">Results</a>
         <a href="#discussion">Discussion</a>
         <a href="#conclusion">Conclusion</a>
+        <a href="#limitation">Limitations & Future Work</a>
         <a href="#acknowledgements">Acknowledgements</a>
         <a href="#get-in-touch">Get in touch</a>
       </nav>
@@ -78,46 +79,6 @@
           Using functional MRI data, we examine whether differences in intelligence help explain variability in brain responses during speech perception.
         </p>
       </section>
-      <!-- <section class="section" id="introduction">
-        <h2>Introduction</h2>
-
-        <p>
-          Schizophrenia affects approximately <strong>1%</strong> of the global population and is often associated with hallucinations and delusions.
-          However, one of its most persistent and disabling features is difficulty understanding spoken language, particularly in complex or noisy environments.
-        </p>
-
-        <p>
-          Speech perception depends on several brain regions that support auditory and language processing. 
-          The <strong>auditory cortex</strong> plays a central role in detecting and interpreting sounds, while other regions such as the 
-          <strong>right cerebellar Crus I</strong> are thought to contribute to higher-level cognitive processes involved in language comprehension.
-          Neuroimaging studies have shown that people with schizophrenia often show altered activity in these speech-related brain regions compared to healthy controls.
-        </p>
-
-        <p>
-          Previous research has often tried to explain these differences by separating patients based on whether they experience auditory hallucinations. 
-          However, this approach does not fully explain why brain activity during speech processing varies so widely across individuals.
-        </p>
-
-        <p>
-          Beyond clinical symptoms, cognitive ability has been linked to performance on complex listening tasks in the general population. 
-          This raises a key question: 
-          <strong>could cognitive ability, especially IQ, help explain variability in speech-related brain activity in schizophrenia?</strong>
-        </p>
-
-        <p>
-          To investigate this question, we analyzed a publicly available fMRI dataset from 
-          <a href="https://openneuro.org/datasets/ds004302/versions/1.0.0" target="_blank" rel="noopener noreferrer">OpenNeuro</a>,
-          which includes individuals with schizophrenia and matched healthy controls. 
-          While undergoing MRI scanning, participants listened to individual words, full sentences, and reversed speech.
-        </p>
-
-        <p>
-          We examined how brain activation during these speech conditions varied with IQ while controlling for age and sex. 
-          In particular, we focused on two regions involved in speech and cognitive processing: the 
-          <strong>auditory cortex</strong> and the <strong>right cerebellar Crus I</strong>.
-        </p>
-      </section> -->
-<!-- Introduction Page 1 -->
 
     <section class="section" id="introduction">
       <h2>Did you know?</h2>
@@ -150,73 +111,59 @@
       </div>
     </section>
 
-      <!-- <section class="section" id="objectives">
-        <h2>Data Source</h2>
-        <p>
-          The dataset includes 77 participants with demographic information (age, sex, IQ). For participants with schizophrenia who experience
-          hallucinations, a clinical severity measure (PSYRATS-H) was also available.
-          <img src="assets/participants.jpeg" alt="Block design of auditory fMRI task" class="section-image">
-        </p> -->
-<!-- 
-        <h3>➤ Listening Tasks</h3>
-        <p>During MRI scanning, participants completed three auditory tasks:
-        </p>
-        <ul>
-          <li><strong>Single words:</strong> unrelated spoken words</li>
-          <li><strong>Sentences:</strong> short spoken sentences</li>
-          <li><strong>Reversed speech:</strong> speech-like sounds without semantic meaning</li>
-        </ul>
-        <p><img src="assets/speech_tasks.gif" alt="Block design of auditory fMRI task" class="section-image-speech-tasks"></p> -->
-<section class="section" id="objectives">
-  <h2>Data Source</h2>
+    <section class="section" id="objectives">
+      <h2>Data Source</h2>
 
-  <div class="discussion-top">
-    <div class="data-text">
-      <p>
-        To investigate this question, we analyzed a publicly available fMRI dataset from
-        <a href="https://openneuro.org/datasets/ds004302/versions/1.0.0" target="_blank" rel="noopener noreferrer">OpenNeuro</a>,
-        which includes individuals with schizophrenia and matched healthy controls.
-        The dataset includes 77 participants with demographic information (age, sex, IQ).
-        For participants with schizophrenia who experience hallucinations, a clinical severity measure (PSYRATS-H) was also available.
-      </p>
-    </div>
+      <div class="discussion-top">
+        <div class="data-text">
+          <p>
+            To investigate this question, we analyzed a publicly available fMRI dataset from
+            <a href="https://openneuro.org/datasets/ds004302/versions/1.0.0" target="_blank" rel="noopener noreferrer">OpenNeuro</a>,
+            which includes individuals with schizophrenia and matched healthy controls.
+            The dataset contains information from 77 participants, including sex, age, IQ score, and diagnostic group.
+            Because this project primarily focuses on IQ, we imputed missing IQ values for some participants using mean imputation (an IQ score of 100). 
+            The diagnostic groups consist of healthy controls <strong>(HC)</strong>, individuals with schizophrenia who experience auditory verbal hallucinations <strong>(AVH+)</strong>, 
+            and individuals with schizophrenia who do not experience hallucinations <strong>(AVH-)</strong>. An additional variable, <strong>PSYRATS-H</strong> (hallucination severity,
+            is included for participants with schizophrenia who experience hallucinations.
+          </p>
+        </div>
 
-    <div class="data-media">
-      <img
-        src="assets/images/participants.jpeg"
-        alt="Participant demographics table"
-        class="section-image"
-      >
-    </div>
-  </div>
+        <div class="data-media">
+          <img
+            src="assets/images/participants.jpeg"
+            alt="Participant demographics table"
+            class="section-image"
+          >
+        </div>
+      </div>
 
-  <div class="listening-row">
-    <div class="listening-media">
-      <img
-        src="assets/images/speech_tasks.gif"
-        alt="Auditory task examples"
-        class="section-image-speech-tasks"
-      >
-    </div>
+      <div class="listening-row">
+        <div class="listening-media">
+          <img
+            src="assets/images/speech_tasks.gif"
+            alt="Auditory task examples"
+            class="section-image-speech-tasks"
+          >
+        </div>
 
-    <div class="listening-text">
-      <h3>➤ Listening Tasks</h3>
-      <p>During MRI scanning, participants completed three auditory tasks:</p>
-      <ul>
-        <li><strong>Single words:</strong> unrelated spoken words</li>
-        <li><strong>Sentences:</strong> short spoken sentences</li>
-        <li><strong>Reversed speech:</strong> speech-like sounds without semantic meaning</li>
-      </ul>
+        <div class="listening-text">
+          <h3>➤ Listening Tasks</h3>
+          <p>During MRI scanning, participants completed three auditory tasks:</p>
+          <ul>
+            <li><strong>Single words:</strong> unrelated spoken words</li>
+            <li><strong>Sentences:</strong> short spoken sentences</li>
+            <li><strong>Reversed speech:</strong> speech-like sounds without semantic meaning</li>
+          </ul>
 
-      <p>
-        A block design was used, with each listening condition presented in randomized 26-second blocks. White noise served
-        as a baseline between task blocks. The experiment lasted approximately 11 minutes. Audio was delivered through MRI-compatible
-        headphones, and participants viewed a neutral gray screen throughout the task. Functional brain images were collected using a
-        3-Tesla MRI scanner and processed using standard fMRI preprocessing and analysis techniques.
-      </p>
-    </div>
-  </div>
-</section>
+          <p>
+            A block design was used, with each listening condition presented in randomized 26-second blocks. White noise served
+            as a baseline between task blocks. The experiment lasted approximately 11 minutes. Audio was delivered through MRI-compatible
+            headphones, and participants viewed a neutral gray screen throughout the task. Functional brain images were collected using a
+            3-Tesla MRI scanner and processed using standard fMRI preprocessing and analysis techniques.
+          </p>
+        </div>
+      </div>
+    </section>
 
 
       </section>
@@ -409,12 +356,16 @@
     </section>
 
       <section class="section" id="conclusion">
-        <h2>Conclusion &amp; Future Work</h2>
-        <h3>Conclusion</h3>
+        <h2>Conclusion</h2>
         <p>This study examined how IQ relates to brain activation during speech processing. 
           All groups showed consistent activation in the auditory cortex, highlighting its key role in speech perception. 
           However, IQ was not significantly related to activation in this region. In contrast, IQ-related effects appeared in right cerebellar Crus I, 
           suggesting that cerebellar regions may reflect cognitive differences in language processing.</p>
+      </section>
+
+      <section class="section" id="limitation">
+        <h2>Limitations & Future Work</h2>
+        <h3>Limitations</h3>
         <h3>Next Steps</h3>
         <p>This study was limited by a relatively small sample size and a focus on only a few brain regions. 
           Future work with larger datasets and additional regions may better clarify how cognitive ability influences speech processing in schizophrenia.</p>
@@ -427,11 +378,6 @@
 
       </section>
 
-
-      <!-- <section class="section" id="get-in-touch">
-        <h2>Curious about the project? We’d love to chat. ☕️</h2>
-        <p>Email: <a href="mailto:ppagaduan@ucsd.edu">ppagaduan@ucsd.edu</a>, <a href="mailto:ksuherman@ucsd.edu">ksuherman@ucsd.edu</a>, <a href="mailto:rnarwastu@ucsd.edu">rnarwastu@ucsd.edu</a></p>
-      </section> -->
       <section class="section" id="get-in-touch">
         <h2>Get in Touch</h2>
 
@@ -458,7 +404,7 @@
 
           <!-- Katrina -->
           <div class="contact-card">
-            <img src="assets/images/katrina.jpg" alt="Katrina Suherman" class="profile-pic">
+            <img src="assets/images/katrina.jpeg" alt="Katrina Suherman" class="profile-pic">
             <h3>Katrina Suherman</h3>
 
             <p>
@@ -466,9 +412,9 @@
             </p>
 
             <p>
-              <a href="#">LinkedIn</a> •
-              <a href="#">GitHub</a> •
-              <a href="#">Website</a>
+              <a href="https://www.linkedin.com/in/katrinasuherman/">LinkedIn</a> •
+              <a href="https://github.com/katrinasuherman">GitHub</a> •
+              <a href="https://katrinasuherman.github.io/katrina-portfolio/">Website</a>
             </p>
 
           </div>
@@ -599,24 +545,6 @@
     });
   })();
 
-  // const io = new IntersectionObserver((entries) => {
-  //   const active = pickActiveSection(entries);
-  //   if (!active) return;
-
-  //   clearStates();
-  //   active.classList.add("is-active");
-
-  //   // mark neighbors (previous/next) as "near" so transitions feel smoother
-  //   const idx = sections.indexOf(active);
-  //   if (idx > 0) sections[idx - 1].classList.add("is-near");
-  //   if (idx < sections.length - 1) sections[idx + 1].classList.add("is-near");
-  // }, {
-  //   root: scrollContainer,            // ✅ IMPORTANT: right panel scroll container
-  //   threshold: [0.15, 0.35, 0.55, 0.75],
-  //   rootMargin: "-20% 0px -45% 0px"   // ✅ makes "current" snap nicely
-  // });
-
-  // sections.forEach(sec => io.observe(sec));
     if (window.innerWidth > 900) {
     const io = new IntersectionObserver((entries) => {
       const active = pickActiveSection(entries);
