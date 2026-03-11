@@ -48,7 +48,7 @@
         <a href="#discussion">Discussion</a>
         <a href="#conclusion">Conclusion</a>
         <a href="#limitation">Limitations & Future Work</a>
-        <a href="#acknowledgements">Acknowledgements</a>
+        <a href="#references">References</a>
         <a href="#get-in-touch">Get in touch</a>
       </nav>
 
@@ -86,7 +86,7 @@
       <div class="story-intro">
 
         <p>
-          About <strong>1 in 100 people worldwide</strong> live with schizophrenia, and many experience difficulty understanding spoken language, even during everyday conversations. 
+          About <strong>1 in 345 people worldwide</strong> live with schizophrenia, and many experience difficulty understanding spoken language, even during everyday conversations <sup>[1]</sup>. 
           Speech perception relies on several brain regions that process sounds and meaning. 
           The <strong>auditory cortex</strong> helps detect and interpret sounds, while areas such as the 
           <strong>right cerebellar Crus I</strong> support higher-level cognitive processes involved in language comprehension.
@@ -94,7 +94,7 @@
 
         <p>
           Neuroimaging studies have shown that people with schizophrenia often show altered activity in these speech-related brain regions compared to healthy controls. 
-          Previous research has mainly tried to explain these differences by separating patients based on whether they experience auditory hallucinations, but this does not fully explain why brain activity during speech processing varies so widely across individuals.
+          Previous research has mainly tried to explain these differences by separating patients based on whether they experience auditory hallucinations, but this does not fully explain why brain activity during speech processing varies so widely across individuals <sup>[2]</sup>.
         </p>
 
         <p>
@@ -103,7 +103,7 @@
         </p>
 
         <p>
-          In this project, we examined how brain activation during different speech conditions varies with IQ while controlling for age and sex. 
+          In this project, we examined how brain activation during different speech conditions varies with IQ. 
           We focused on two regions involved in speech and cognitive processing: the 
           <strong>auditory cortex</strong> and the <strong>right cerebellar Crus I</strong>.
         </p>
@@ -135,7 +135,7 @@
             class="section-image"
           >
           <p class="figure-caption">
-            Figure 1. Participants information example
+            Figure 1. Participant's information that includes age, sex, IQ, and group
           </p>
         </div>
       </div>
@@ -148,7 +148,7 @@
             class="section-image-speech-tasks"
           >
           <p class="figure-caption">
-            Figure 2. Speech-based task example
+            Figure 2. Three auditory tasks: words, sentences, and reversed speech
           </p>
         </div>
 
@@ -166,7 +166,7 @@
             A block design was used, with each listening condition presented in randomized 26-second blocks. White noise served
             as a baseline between task blocks. The experiment lasted approximately 11 minutes. Audio was delivered through MRI-compatible
             headphones, and participants viewed a neutral gray screen throughout the task. Functional brain images were collected using a
-            3-Tesla MRI scanner and processed using standard fMRI preprocessing and analysis techniques.
+            3-Tesla MRI scanner.
           </p>
         </div>
       </div>
@@ -234,14 +234,14 @@
         </div>
     </section>
 
-      <section class="section" id="results">
+      <!-- <section class="section" id="results">
         <h2>Results</h2>
 
         <div class="story-card">
           <div class="story-header">
             <p class="story-lede">
               In the sections below, you’ll interact with two visualizations. 
-              The first focuses on the relationship between IQ and auditory cortex activation. 
+              The first focuses on the relationship between IQ and Right Cerebellar Crus I activation. 
               The second allows you to build your own comparisons across multiple variables.
             </p>
           </div>
@@ -296,10 +296,116 @@
             frameborder="0"
           ></iframe>
         </div>
-        <!-- <div class="callout">
-          <strong>What we observed:</strong>
-          Across all three listening conditions (words, sentences, reversed speech), the pairwise plots show no strong linear relationships between IQ, age, symptom severity (PSYRATS), and ROI activation.
-        </div> -->
+      </section> -->
+
+      <section class="section" id="results">
+        <h2>Results</h2>
+
+        <div class="story-card">
+          <div class="story-header">
+            <p class="story-lede">
+              In the sections below, you’ll first see the main whole-brain findings, including
+              group mean activation patterns and covariate effects. Then, you’ll interact with
+              two visualizations that focus on ROI-level relationships and broader variable comparisons.
+            </p>
+          </div>
+
+          <div class="story-intro">
+            <p class="story-highlight">
+              As you explore, consider how overall activation patterns, covariate effects,
+              and group differences might support or challenge the study’s main hypothesis.
+            </p>
+          </div>
+
+          <a class="story-next" href="#group-mean">Start exploring ↓</a>
+        </div>
+      </section>
+
+      <section class="section section-full" id="group-mean">
+        <h2>Group Mean Activation</h2>
+
+        <p>
+          We first examined whole-brain average activation patterns in participants with schizophrenia in the <strong>Auditory cortex</strong> region.
+        </p>
+
+        <div class="discussion-figure">
+          <img
+            src="assets/images/revesed_updated.png"
+            alt="Whole-brain activation maps for reversed speech in AVH plus and AVH minus groups"
+            class="section-image-large"
+          >
+          <p class="figure-caption">
+            Figure 3. Whole-brain activation maps for the <em>reversed speech</em> contrast in participants with schizophrenia. 
+            Warm colors indicate significant activation (<em>Z > 2.3</em>, cluster-corrected <em>p < 0.05</em>),
+            with yellow showing stronger effects than red. 
+          </p>
+        </div>
+      </section>
+
+      <section class="section section-full" id="covariate-effects">
+        <h2>Covariate Effects</h2>
+
+        <p>
+          Next, we tested whether activation changed as a function of
+          IQ while controlling for age and sex. The map below shows the
+          <strong>Words</strong> contrast in the <strong>AVH−</strong> group in the <strong>Right cerebellar Crus I</strong>, which was the
+          only group and condition where a positive association with IQ survived correction.
+        </p>
+
+          <div class="discussion-figure">
+            <img
+              src="assets/images/WORDS_IQ_COVARIATE.png"
+              alt="Right cerebellar Crus I region"
+              class="section-image-rightcrus"
+            >
+            <p class="figure-caption">
+              Figure 4. Whole-brain activation maps showing the effect of IQ during the words contrast in the AVH− group. 
+              Highlighted regions indicate voxels where activation increases with IQ (Z > 2.3, cluster-corrected p < 0.05).
+            </p>
+          </div>
+      </section>
+
+      <section class="section section-full" id="scatter">
+        <h2>Explore the Relationship Between IQ and Right Crus I</h2>
+
+        <div class="mini-guide">
+          <p class="mini-guide-title"><strong>Quick guide</strong></p>
+          <ol class="mini-guide-steps">
+            <li><strong>Pick a Contrast</strong> (Sentences, Words, Reversed speech).</li>
+            <li><strong>Switch Group</strong> and compare patterns.</li>
+            <li><strong>Use the IQ slider</strong> to zoom into a range (e.g., 85–105).</li>
+            <li><strong>Change sex</strong> and compare Female vs Male.</li>
+          </ol>
+        </div>
+
+        <div class="iframe-wrapper plot-wrapper">
+          <iframe
+            src="assets/scatter_plot/iq_roi_scatter.html"
+            loading="lazy"
+            frameborder="0"
+          ></iframe>
+        </div>
+      </section>
+
+      <section class="section section-full" id="pairwise">
+        <h2>Pairwise Relationships (Words, Sentences, Reversed Speech)</h2>
+
+        <div class="mini-guide">
+          <p class="mini-guide-title"><strong>Quick guide</strong></p>
+          <ol class="mini-guide-steps">
+            <li><strong>Pick 2–4 variables</strong></li>
+            <li><strong>Filter by group</strong> to compare HC vs AVH+/AVH−.</li>
+          </ol>
+        </div>
+
+        <div class="iframe-wrapper plot-wrapper">
+          <iframe
+            src="assets/scatter_plot/interactive_pairwise_filters_with_contrast.html"
+            title="Interactive pairwise plot with filters"
+            loading="lazy"
+            frameborder="0"
+          ></iframe>
+        </div>
       </section>
       <section class="section" id="discussion">
         <h2>Discussion</h2>
@@ -310,7 +416,7 @@
               In addition to the auditory cortex, we examined the <strong>right cerebellar Crus I</strong>, 
               a region in the posterior cerebellum that has been linked to higher-level cognitive and language-related processes. 
               Prior research suggests that this region may play an important role in syntactic and cognitive aspects of speech processing, 
-              making it a relevant target for understanding variability in schizophrenia.
+              making it a relevant target for understanding variability in schizophrenia <sup>[3]</sup>.
             </p>
 
             <p>
@@ -342,14 +448,15 @@
             class="section-image-table"
           >
           <p class="figure-caption">
-            Table 1. Linear regression results for IQ and ROI activation (COPE values) across contrasts and groups. Significant results (p < 0.05) are highlighted in red.
+            Table 1. Linear regression results for IQ and ROI activation (COPE values) across groups in words contrast. Significant results (p < 0.05) are highlighted in red.
           </p>
         </div>
 
         <div class="discussion-text">
           <p>
             The clearest finding emerged in the <strong>Words</strong> condition, where the relationship between IQ and right cerebellar Crus I activation was statistically significant in both schizophrenia groups. 
-            For the AVH+ group, higher IQ was associated with <strong>lower</strong> activation in right Crus I, while for the AVH− group, higher IQ was associated with <strong>higher</strong> activation. 
+            For the AVH+ group, higher IQ was associated with <strong>lower</strong> activation in right Crus I, which alligns with previous researches that talks about this idea as well <sup>[4, 5]</sup>.
+            Meanwhile, for the AVH− group, higher IQ was associated with <strong>higher</strong> activation. 
             This suggests that cognitive ability may relate to speech processing differently depending on hallucination status.
           </p>
 
@@ -390,11 +497,40 @@
         </p>
       </section>
 
-      <section class="section" id="acknowledgements">
-        <h2>Huge Thanks</h2>
-        <p>Thank you for taking your time to read through our project! Feel free to reach out to us or check out our project repository.</p>
-        <p>We also want to thank Dr. Armin Schwartzman and Gabriel Riegner for their advice, feedbacks, and support throughout this project!</p>
+      <section class="section" id="references">
+        <h2>References</h2>
 
+        <ol class="references">
+          <li>
+            World Health Organization. (2022). <em>Schizophrenia</em>. 
+            https://www.who.int/news-room/fact-sheets/detail/schizophrenia
+          </li>
+          <li>
+            Woodruff, P. W., Wright, I. C., Bullmore, E. T., Brammer, M., Howard, R. J., 
+            Williams, S. C., & McGuire, P. K. (1997). 
+            Auditory hallucinations and the temporal cortical response to speech in schizophrenia: 
+            a functional MRI study. 
+            <em>American Journal of Psychiatry</em>. 
+            https://pubmed.ncbi.nlm.nih.gov/9396945/
+          </li>
+          <li>
+            Nakatani, H., et al. (2023). The role of cerebellar Crus I in language and cognitive processing.
+            <em>Neuroscience Research</em>.
+          </li>
+          <li>
+            Haier, R. J., Siegel, B. V., Nuechterlein, K. H., Hazlett, E., Wu, J. C., Paek, J., 
+            Browning, H. L., & Buchsbaum, M. S. (1988). Cortical glucose metabolic rate 
+            correlates of abstract reasoning and attention studied with positron emission 
+            tomography. <em>Intelligence</em>, 12(2), 199–217.
+          </li>
+
+          <li>
+            Neubauer, A. C., Fink, A., & Schrausser, D. G. (2002). Intelligence and neural 
+            efficiency: The influence of task content and sex on the brain–IQ relationship. 
+            <em>Intelligence</em>, 30(6), 515–536.
+          </li>
+
+        </ol>
       </section>
 
       <section class="section" id="get-in-touch">
