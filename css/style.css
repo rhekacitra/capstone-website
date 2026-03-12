@@ -1522,3 +1522,8 @@ figcaption{
   font-weight: 700;
   color: var(--accent);
 }
+
+#welcome {
+  justify-content: center;
+  padding-top: 0;
+}
