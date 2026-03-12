@@ -33,6 +33,7 @@ h1, h2, h3{
 
 h1, h2 {
   color: var(--accent);
+  font-size: clamp(1.3rem, 2.8vw, 2.4rem);
 }
 
 p, h1, h2, h3 {
@@ -410,7 +411,7 @@ figcaption{
 .project-review-interactive{
   width: 700px;
   height: 310px;
-  margin: 24px auto 0;
+  margin: 8px auto 0;
 
   border-radius: 14px;
   overflow: hidden;
@@ -1441,4 +1442,83 @@ figcaption{
   .left-inner{
     min-height: auto;
   }
+}
+
+@keyframes hint-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(123,104,238,0); }
+  50%       { box-shadow: 0 0 0 4px rgba(123,104,238,0.35); }
+}
+.iframe-wrapper {
+  animation: hint-pulse 1.2s ease 0.5s 2;
+}
+
+.iq-highlight {
+  position: relative;
+  display: inline-block;
+  color: #5046e5 !important;
+}
+
+.iq-highlight::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: #5046e5;
+  border-radius: 2px;
+  transform-origin: left center;
+  animation: iq-underline 2s ease-in-out infinite;
+}
+
+@keyframes iq-underline {
+  0%   { transform: scaleX(0); opacity: 0; }
+  40%  { transform: scaleX(1); opacity: 1; }
+  60%  { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(0); opacity: 0; }
+}
+
+/* ===== Welcome title animations ===== */
+.welcome-title {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: title-fadein 0.9s ease forwards;
+  animation-delay: 0.2s;
+}
+
+@keyframes title-fadein {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.speech-highlight {
+  color: #7c3aed !important;
+}
+
+.scz-highlight {
+  position: relative;
+  display: inline-block;
+  color: #9d174d !important;
+  animation: scz-breathe 3s ease-in-out 0.5s infinite;
+}
+
+@keyframes scz-breathe {
+  0%, 100% { letter-spacing: normal; }
+  50%       { letter-spacing: 0.04em; }
+}
+
+.title-stats {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  margin-top: 10px;
+  opacity: 0;
+  animation: title-fadein 0.9s ease forwards;
+  animation-delay: 1s;
+}
+
+.title-stats .stat-counter {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent);
 }

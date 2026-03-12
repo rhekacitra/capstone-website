@@ -65,10 +65,30 @@
       </a>
 
       <section class="section" id="welcome">
-        <h2>How Does IQ Shape Speech Processing in Schizophrenia?</h2>
-        <div class="project-review-interactive">
+        <h2 class="welcome-title">How Does <span class="iq-highlight">IQ</span> Shape Speech Processing in <span class="scz-highlight">Schizophrenia</span>?</h2>
+        <div class="project-review-interactive" style="position:relative;">
+          <div
+            id="brain-overlay"
+            style="
+              position:absolute; inset:0; z-index:10;
+              display:flex; align-items:center; justify-content:center;
+              background:rgba(30,20,80,0.15);
+              border-radius:inherit; cursor:grab;
+            "
+            onclick="this.style.opacity='0'; setTimeout(()=>this.remove(), 300);"
+          >
+          <div style="
+            background:rgba(0,0,0,0.38);
+            border-radius:20px; padding:7px 16px;
+            pointer-events:none;
+          ">
+            <small style="font-size:12px;color:rgba(255,255,255,0.85);letter-spacing:0.03em;">
+              ✥ drag to explore
+            </small>
+          </div>
+          </div>
           <iframe
-            src="assets/activation_maps/brain_view_sentences_AVH+.html"
+            src="assets/activation_maps/iq_words_AVH-.html"
             title="Interactive Background Viewer"
             loading="lazy"
             frameborder="0"
@@ -598,6 +618,21 @@
     </div>
 
 <script>
+  // Stat counters
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.stat-counter').forEach(el => {
+      const target = +el.dataset.target;
+      const duration = 1200;
+      const step = target / (duration / 16);
+      let current = 0;
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) { current = target; clearInterval(timer); }
+        el.textContent = Math.floor(current);
+      }, 16);
+    });
+  });
+
   // last updated (safe guard)
   const lastUpdated = document.getElementById("last-updated");
   if (lastUpdated) {
